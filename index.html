@@ -168,7 +168,7 @@
     <div class="project">
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
-      <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. The NASA SMAP L4 product scored 0.0540 on the same observations, so my error was 22% lower.</p>
+      <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. The NASA SMAP L4 product scored 0.0540 on the same observations, so my error was 22% lower. Both were scored after removing each station’s average offset, which needs past sensor readings from that station.</p>
       <ul>
         <li>Built a multi-source geospatial dataset with 3.06M station-days of ground observations from 1,599 stations in 56 networks. I combined it with ERA5-Land and CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
         <li>Aligned 1.44M Sentinel-1 radar images, Sentinel-2 optical indices, and MODIS land-surface temperature to each satellite pass. The joins fix local dates, use only past weather, and keep every acquisition.</li>
