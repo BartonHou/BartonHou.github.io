@@ -78,6 +78,50 @@
   .entries .links { font: 500 .95rem var(--display); margin: 6px 0 0; display: flex; gap: 18px; }
   .result { font-style: italic; }
 
+  /* ---------- Figures in the body ---------- */
+  .viz { margin: 22px 0 6px; max-width: 68ch; }
+  .viz figcaption { color: var(--muted); font-size: .9rem; line-height: 1.5; padding: 10px 0 0; max-width: none; }
+  .viz figcaption b { color: var(--text); font-family: var(--display); font-weight: 700; }
+  .bars { display: grid; gap: 7px; }
+  .bar { display: grid; grid-template-columns: 17.5rem 1fr 3.4rem; align-items: center; gap: 12px; font-size: .92rem; }
+  .bar .lab { line-height: 1.3; }
+  .bar .track { background: #E1E9E9; height: 14px; border-radius: 3px; overflow: hidden; }
+  .bar .track i { display: block; height: 100%; background: #A9B9BB; }
+  .bar.us .track i { background: var(--accent); }
+  .bar.us .lab, .bar.us .val { font-weight: 700; color: var(--accent); }
+  .bar.other .track i { background: #C79A3A; }
+  .bar .val { font: 500 .88rem var(--display); text-align: right; font-variant-numeric: tabular-nums; }
+  .viz-sub { font: 700 .95rem var(--display); margin: 0 0 8px; }
+  .gauge { display: flex; height: 30px; border-radius: 4px; overflow: hidden; background: #E1E9E9; font: 700 .85rem var(--display); }
+  .gauge .on { background: var(--accent); color: #fff; display: flex; align-items: center; padding: 0 10px; white-space: nowrap; }
+  .gauge .off { color: var(--muted); font-weight: 500; display: flex; align-items: center; padding: 0 12px; }
+  .clock { position: relative; height: 128px; margin: 4px 6px 0; }
+  .clock .axis { position: absolute; left: 0; right: 0; top: 38px; height: 4px; background: #A9B9BB; border-radius: 2px; }
+  .clock .tick { position: absolute; top: 52px; font: 500 .75rem var(--display); color: var(--muted); transform: translateX(-50%); }
+  .clock .tick.l { transform: none; } .clock .tick.r { transform: translateX(-100%); }
+  .clock .pass { position: absolute; top: 33px; width: 14px; height: 14px; background: var(--accent); transform: translateX(-50%) rotate(45deg); }
+  .clock .read { position: absolute; top: 31px; width: 18px; height: 18px; border-radius: 50%; background: #C79A3A; transform: translateX(-50%); border: 2px solid var(--paper); }
+  .clock .passlab { position: absolute; top: 4px; transform: translateX(-50%); text-align: center; font: 700 .78rem/1.2 var(--display); color: var(--accent); white-space: nowrap; }
+  .clock .lag { position: absolute; height: 0; border-top: 2px solid #C79A3A; }
+  .clock .lag::before, .clock .lag::after { content: ""; position: absolute; top: -6px; height: 10px; border-left: 2px solid #C79A3A; }
+  .clock .lag::before { left: 0; } .clock .lag::after { right: 0; }
+  .clock .laglab { position: absolute; transform: translate(calc(-100% - 8px), -50%); font: 700 .8rem var(--display); color: #8A6414; white-space: nowrap; }
+  .key { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 10px 0 0; font: 500 .82rem var(--display); color: var(--muted); }
+  .key i { display: inline-block; vertical-align: -2px; margin-right: 6px; }
+  .key .d { width: 9px; height: 9px; background: var(--accent); transform: rotate(45deg); }
+  .key .c { width: 11px; height: 11px; border-radius: 50%; background: #C79A3A; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 8px 0; font: 500 .85rem/1.25 var(--display); }
+  .flow .lane { flex: 0 0 100%; color: var(--muted); font-weight: 700; margin-top: 8px; }
+  .flow .n { background: #fff; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 10px; }
+  .flow .n.key-n { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .flow .a { color: var(--muted); }
+  .flow .s { display: inline-flex; align-items: center; gap: 8px; }
+  @media (max-width: 760px) {
+    .bar { grid-template-columns: 1fr 3.4rem; }
+    .bar .lab { grid-column: 1 / -1; }
+    .bar .track { grid-column: 1; }
+  }
+
   dl { margin: 0; max-width: 68ch; }
   dt { font: 700 1rem var(--display); margin-top: 0; }
   dd { margin: 2px 0 18px; }
@@ -169,6 +213,28 @@
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
       <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. The NASA SMAP L4 product scored 0.0540 on the same observations, so my error was 22% lower. Both were scored after removing each station’s average offset, which needs past sensor readings from that station.</p>
+      <figure class="viz">
+        <p class="viz-sub">How big is the error, compared with real sensors?</p>
+        <div class="bars">
+          <div class="bar "><span class="lab">That station’s own sensor, 7 days old</span><span class="track"><i style="width:41.1%"></i></span><span class="val">0.0329</span></div>
+          <div class="bar "><span class="lab">A real sensor 2 to 5 km away</span><span class="track"><i style="width:45.5%"></i></span><span class="val">0.0364</span></div>
+          <div class="bar us"><span class="lab">My model, with no sensor at the site</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
+          <div class="bar "><span class="lab">A real sensor 5 to 10 km away</span><span class="track"><i style="width:53.8%"></i></span><span class="val">0.0430</span></div>
+          <div class="bar "><span class="lab">Seasonal average for that day of the year</span><span class="track"><i style="width:70.4%"></i></span><span class="val">0.0563</span></div>
+          <div class="bar "><span class="lab">That station’s long-run average</span><span class="track"><i style="width:87.4%"></i></span><span class="val">0.0699</span></div>
+        </div>
+        <figcaption><b>Shorter is better.</b> Median error in m³/m³ on my station panel, scored the same way for every row. A model with no sensor at the site lands next to a real sensor 5 to 10 km away.</figcaption>
+      </figure>
+
+      <figure class="viz">
+        <p class="viz-sub">Against NASA’s SMAP L4 product, on the same observations</p>
+        <div class="bars">
+          <div class="bar us"><span class="lab">My model</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
+          <div class="bar other"><span class="lab">SMAP L4 surface soil moisture</span><span class="track"><i style="width:67.5%"></i></span><span class="val">0.0540</span></div>
+          <div class="bar "><span class="lab">Seasonal average</span><span class="track"><i style="width:76.4%"></i></span><span class="val">0.0611</span></div>
+        </div>
+        <figcaption><b>106,584 observations at 340 U.S. stations.</b> Both predictions had each station’s average offset removed. This chart uses only the days SMAP L4 covers, so its seasonal-average bar differs from the one above.</figcaption>
+      </figure>
       <ul>
         <li>Built a multi-source geospatial dataset with 3.06M station-days of ground observations from 1,599 stations in 56 networks. I combined it with ERA5-Land and CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
         <li>Aligned 1.44M Sentinel-1 radar images, Sentinel-2 optical indices, and MODIS land-surface temperature to each satellite pass. The joins fix local dates, use only past weather, and keep every acquisition.</li>
@@ -176,6 +242,37 @@
         <li>Ran the benchmark with PRISM-enhanced LightGBM on 106,584 matched observations, using station-held-out cross-validation and identical de-biasing for both models.</li>
         <li>Defined a skill metric, 1 − A/B, that compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows how much the model learns beyond the seasonal cycle.</li>
       </ul>
+      <figure class="viz">
+        <p class="viz-sub">When the satellite looks, and when the sensor measures</p>
+        <div class="clock" role="img" aria-label="A 24-hour axis. Sentinel-1 passes at about 06:00 and 18:00 local time. The SCAN sensor's daily value is read at 23:00, which is 5 hours after the 18:00 pass and 17 hours after the 06:00 pass.">
+          <span class="passlab" style="left:25%">Radar pass<br>06:00</span>
+          <span class="passlab" style="left:75%">Radar pass<br>18:00</span>
+          <span class="axis"></span>
+          <span class="pass" style="left:25%"></span>
+          <span class="pass" style="left:75%"></span>
+          <span class="read" style="left:95.83%"></span>
+          <span class="tick l" style="left:0">0:00</span>
+          <span class="tick" style="left:25%">6:00</span>
+          <span class="tick" style="left:50%">12:00</span>
+          <span class="tick" style="left:75%">18:00</span>
+          <span class="tick r" style="left:100%">24:00</span>
+          <span class="lag" style="left:75%;width:20.83%;top:86px"></span>
+          <span class="laglab" style="left:75%;top:86px">5 hours</span>
+          <span class="lag" style="left:25%;width:70.83%;top:112px"></span>
+          <span class="laglab" style="left:25%;top:112px">17 hours</span>
+        </div>
+        <div class="key"><span><i class="d"></i>Sentinel-1 radar pass</span><span><i class="c"></i>SCAN sensor reading, 23:00 local</span></div>
+        <figcaption><b>62% of my station panel comes from SCAN sensors.</b> Their “daily” value is one reading at 23:00, not an average, so it is taken 5 to 17 hours after the satellite looked. The other 38% (USCRN) is a true 24-hour average.</figcaption>
+      </figure>
+
+      <figure class="viz">
+        <p class="viz-sub">How much one radar image can tell you</p>
+        <div class="gauge" role="img" aria-label="A bar from 0 to 1. One Sentinel-1 observation reaches R squared of about 0.29 at most.">
+          <span class="on" style="width:29%">R² 0.29</span>
+          <span class="off">out of reach with one image</span>
+        </div>
+        <figcaption><b>A single Sentinel-1 observation reaches R² 0.29 at most.</b> The soil-moisture part of the radar signal is only 41% as large as everything else mixed into it (signal-to-noise variance ratio 0.414).</figcaption>
+      </figure>
     </div>
 
     <div class="project">
@@ -197,6 +294,7 @@
       <h3>Translator</h3>
       <p class="where">FastAPI, Celery, Redis, PostgreSQL, Docker, PyTorch.</p>
       <div class="links"><a href="https://bartonhou.github.io/Translator/">Live demo</a><a href="https://github.com/BartonHou/Translator">Source code</a></div>
+      <div class="viz"><div class="flow"><span class="lane">Quick translations</span><span class="s"><span class="n">Request</span><span class="a">→</span></span><span class="s"><span class="n">API: direct or sentence stream</span><span class="a">→</span></span><span class="s"><span class="n">Sentence cache</span><span class="a">→</span></span><span class="n key-n">OPUS-MT or NLLB model</span><span class="lane">Batch and file jobs</span><span class="s"><span class="n">Request</span><span class="a">→</span></span><span class="s"><span class="n">API</span><span class="a">→</span></span><span class="s"><span class="n">Redis queue</span><span class="a">→</span></span><span class="s"><span class="n">Celery worker</span><span class="a">→</span></span><span class="s"><span class="n">PostgreSQL result</span><span class="a">→</span></span><span class="n">Signed callback</span></div></div>
       <ul>
         <li>Designed three ways to translate: a direct request, a sentence-by-sentence stream, and an asynchronous job, all sharing the same inference code.</li>
         <li>Moved batch and file jobs out of the web request into Celery workers backed by Redis and PostgreSQL. Signed callbacks are retried on their own, so a failed callback never re-runs the translation.</li>
@@ -209,6 +307,7 @@
       <h3>World Signals</h3>
       <p class="where">Python, JavaScript, OpenAI API, GitHub Actions.</p>
       <div class="links"><a href="https://bartonhou.github.io/world_news/">Live demo</a><a href="https://github.com/BartonHou/world_news">Source code</a></div>
+      <div class="viz"><div class="flow"><span class="lane">Weekly refresh</span><span class="s"><span class="n">Google News, Reddit, YouTube</span><span class="a">→</span></span><span class="s"><span class="n">Rule-based filters</span><span class="a">→</span></span><span class="s"><span class="n key-n">Language model picks and explains</span><span class="a">→</span></span><span class="s"><span class="n">Static JSON</span><span class="a">→</span></span><span class="n">World map</span></div></div>
       <ul>
         <li>Split news and internet culture into two pipelines, because one trending feed was dominated by news. Each country uses native-language sources with fixed quotas, and a language model rescores a limited set of candidates. Hard-exclusion rules can be audited.</li>
         <li>A batch job writes explanations for short multilingual titles ahead of time. The site serves scheduled static JSON, so the browser never calls a model or API. The project has fallbacks for failed sources and regression tests that need no network.</li>
@@ -219,6 +318,7 @@
       <h3>Document question-answering system (RAG)</h3>
       <p class="where">FastAPI, Streamlit, LangGraph, Chroma, OpenAI API, Docker Compose.</p>
       <div class="links"><a href="https://github.com/BartonHou/RAG-system">Source code</a></div>
+      <div class="viz"><div class="flow"><span class="lane">Upload</span><span class="s"><span class="n">PDF</span><span class="a">→</span></span><span class="s"><span class="n">Split into chunks</span><span class="a">→</span></span><span class="s"><span class="n">Skip if same file hash</span><span class="a">→</span></span><span class="n key-n">Chroma database</span><span class="lane">Question</span><span class="s"><span class="n">Question</span><span class="a">→</span></span><span class="s"><span class="n">Find the 3 closest passages</span><span class="a">→</span></span><span class="n key-n">Language model writes the answer</span></div></div>
       <ul>
         <li>Built an app where you upload PDFs and ask questions about them. A FastAPI service handles retrieval and answers, and a Streamlit page provides the chat and upload screen. A LangGraph pipeline first retrieves the 3 most relevant passages, then writes the answer from them.</li>
         <li>Stored document chunks in a persistent Chroma database, so uploads survive restarts. Each file is hashed on upload, so the same PDF is never indexed twice.</li>
