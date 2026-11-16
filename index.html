@@ -83,9 +83,10 @@
   .viz figcaption { color: var(--muted); font-size: .9rem; line-height: 1.5; padding: 10px 0 0; max-width: none; }
   .viz figcaption b { color: var(--text); font-family: var(--display); font-weight: 700; }
   .bars { display: grid; gap: 7px; }
-  .bar { display: grid; grid-template-columns: 17.5rem 1fr 3.4rem; align-items: center; gap: 12px; font-size: .92rem; }
+  .bar { display: grid; grid-template-columns: 17.5rem 1fr 6rem; align-items: center; gap: 12px; font-size: .92rem; }
   .bar .lab { line-height: 1.3; }
-  .bar .track { background: #E1E9E9; height: 14px; border-radius: 3px; overflow: hidden; }
+  .bar .track { position: relative; background: #E1E9E9; height: 14px; border-radius: 3px; overflow: hidden; }
+  .bar .track em { position: absolute; top: 0; bottom: 0; background: #E6D3A2; }
   .bar .track i { display: block; height: 100%; background: #A9B9BB; }
   .bar.us .track i { background: var(--accent); }
   .bar.us .lab, .bar.us .val { font-weight: 700; color: var(--accent); }
@@ -117,7 +118,7 @@
   .flow .a { color: var(--muted); }
   .flow .s { display: inline-flex; align-items: center; gap: 8px; }
   @media (max-width: 760px) {
-    .bar { grid-template-columns: 1fr 3.4rem; }
+    .bar { grid-template-columns: 1fr 6rem; }
     .bar .lab { grid-column: 1 / -1; }
     .bar .track { grid-column: 1; }
   }
@@ -166,11 +167,48 @@
   button.chip { cursor: pointer; border-color: var(--accent); color: var(--accent); }
   button.chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
   .chip.plain { color: var(--muted); }
-  .skill-out { display: block; margin-top: 10px; color: var(--text); font-size: .95rem; }
-  .project { transition: opacity .2s; }
-  .project.dim { opacity: .3; }
-  .project.hit { box-shadow: -3px 0 0 var(--accent); }
+  .skill-out { display: block; margin: 0 0 14px; color: var(--text); font-size: .95rem; max-width: 68ch; }
+  [data-tags] { transition: opacity .2s; }
+  [data-tags].dim { opacity: .3; }
+  [data-tags].hit { box-shadow: -3px 0 0 var(--accent); }
   @media print { .top { display: none; } }
+
+  /* ---------- Dropdown groups, timeline, token demo ---------- */
+  details.ask { margin: 0; }
+  .project > .result + figure.viz, .project > .result + details.ask { margin-top: 14px; }
+  .project > details.ask:first-of-type { margin-top: 14px; }
+  .seg button.act { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .scene-wrap { overflow-x: auto; }
+  .scene { display: block; min-width: 560px; width: 100%; height: auto; border-radius: 8px; }
+  .scene .hot { cursor: pointer; outline: none; transition: filter .15s; }
+  .scene .hot:hover { filter: brightness(1.06); }
+  .scene .hot:focus-visible, .scene .hot.sel { filter: drop-shadow(0 0 4px #0F6E75) drop-shadow(0 0 2px #0F6E75); }
+  .arch-wrap { overflow-x: auto; margin: 4px 0 0; }
+  details.ask.wide { max-width: none; }
+  details.ask.wide .viz { max-width: none; }
+  .arch { display: block; min-width: 680px; width: 100%; height: auto; }
+  .note { color: var(--muted); font-size: .88rem; margin: 8px 0 0; }
+  .tokbar { display: flex; align-items: flex-end; gap: 3px; height: 130px; padding-top: 6px; border-bottom: 2px solid #A9B9BB; }
+  .tokbar .tk { flex-basis: 0; min-width: 0; display: flex; align-items: flex-end; }
+  .tokbar .tk i { display: block; width: 100%; background: #A9B9BB; border-radius: 3px 3px 0 0; transition: height .4s ease; }
+  .tokbar .tk.sp i { background: var(--accent); }
+  .tokbar .tk.mg i { background: #C79A3A; }
+  .tl { max-width: 68ch; }
+  .tl-row { display: grid; grid-template-columns: 13rem 1fr; align-items: center; gap: 12px; padding: 5px 0; }
+  .tl-lab { font: 700 .92rem/1.25 var(--display); }
+  .tl-lab small { display: block; font-weight: 500; color: var(--muted); font-size: .78rem; margin-top: 1px; }
+  .tl-track { position: relative; display: block; height: 16px; background: #E4EBEB; border-radius: 3px; }
+  .tl-track.axis { background: none; height: 18px; }
+  .tl-track.axis b { position: absolute; transform: translateX(-50%); font: 500 .75rem var(--display); color: var(--muted); }
+  .tl-track .bar { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .bar.edu, .sw.edu { background: var(--accent); }
+  .bar.work, .sw.work { background: #C79A3A; }
+  .bar.hatch { background: repeating-linear-gradient(135deg, var(--accent) 0 4px, #9CC7CA 4px 8px); }
+  .today { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #16262F; opacity: .55; }
+  .tl-key { display: flex; gap: 18px; margin-top: 8px; font: 500 .82rem var(--display); color: var(--muted); }
+  .tl-key .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .tl-key .sw.today { position: static; width: 2px; height: 12px; border-radius: 0; background: #16262F; opacity: .55; margin-right: 8px; }
+  @media (max-width: 760px) { .tl-row { grid-template-columns: 1fr; gap: 4px; } .tl-axisrow > span:first-child { display: none; } }
 
   dl { margin: 0; max-width: 68ch; }
   dt { font: 700 1rem var(--display); margin-top: 0; }
@@ -248,6 +286,20 @@
 
 <main class="wrap">
 
+<section id="timeline">
+  <h2>Timeline</h2>
+  <div class="entries">
+    <div class="tl" role="img" aria-label="Timeline from 2021 to 2027: Virginia Tech B.S. 2021 to 2025, Ultipa internship summer 2025, Northeastern M.S. 2025 to 2027, teaching assistant from September 2026.">
+      <div class="tl-row tl-axisrow"><span></span><span class="tl-track axis"><b style="left:8.33%">2022</b><b style="left:25.0%">2023</b><b style="left:41.67%">2024</b><b style="left:58.33%">2025</b><b style="left:75.0%">2026</b><b style="left:91.67%">2027</b></span></div>
+      <div class="tl-row"><span class="tl-lab">Virginia Tech, B.S.<small>Sep. 2021 to May 2025</small></span><span class="tl-track"><i class="bar edu" style="left:2.78%;width:62.5%"></i><u class="today" style="left:89.58%"></u></span></div>
+      <div class="tl-row"><span class="tl-lab">Ultipa USA, intern<small>Jun. 2025 to Sep. 2025</small></span><span class="tl-track"><i class="bar work" style="left:65.28%;width:5.56%"></i><u class="today" style="left:89.58%"></u></span></div>
+      <div class="tl-row"><span class="tl-lab">Northeastern, M.S.<small>Sep. 2025 to May 2027 (expected)</small></span><span class="tl-track"><i class="bar edu" style="left:69.44%;width:20.14%"></i><i class="bar edu hatch" style="left:89.58%;width:9.03%"></i><u class="today" style="left:89.58%"></u></span></div>
+      <div class="tl-row"><span class="tl-lab">Teaching assistant<small>Sep. 2026 to present</small></span><span class="tl-track"><i class="bar work" style="left:86.11%;width:3.47%"></i><u class="today" style="left:89.58%"></u></span></div>
+      <div class="tl-key"><span><i class="sw edu"></i>Education</span><span><i class="sw work"></i>Work</span><span><u class="sw today"></u>Today</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="education">
   <h2>Education</h2>
   <div class="entries">
@@ -267,10 +319,27 @@
 <section id="research">
   <h2>Research</h2>
   <div class="entries">
-    <div class="project" id="p-soil" data-tags="LightGBM;Earth Engine">
+    <div class="project" id="p-soil" data-tags="LightGBM;Google Earth Engine;Time-Series Modeling;Remote Sensing">
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
       <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. SMAP L4 v007 scored 0.0540 on the same observations, so my error was 22% lower. Both used the same de-biasing and station-held-out cross-validation.</p>
+      <details class="ask" open>
+        <summary>How it works</summary>
+        <figure class="viz" id="sm">
+          <div class="scene-wrap"><svg class="scene" viewBox="0 0 760 340" role="group" aria-label="Soil moisture scene. Click a part to learn what it adds to the model."><defs><marker id="ev" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 8L5 0L10 8z" fill="#B88A2C"/></marker><radialGradient id="fpR"><stop offset="0" stop-color="#0F6E75" stop-opacity=".75"/><stop offset="1" stop-color="#0F6E75" stop-opacity="0"/></radialGradient><radialGradient id="fpO"><stop offset="0" stop-color="#C79A3A" stop-opacity=".85"/><stop offset="1" stop-color="#C79A3A" stop-opacity="0"/></radialGradient></defs><rect x="0" y="0" width="760" height="206" fill="#E3EDF0"/><g class="hot" data-k="terrain" tabindex="0" role="button" aria-label="Terrain and land cover"><title>Terrain and land cover</title><path d="M0 210 C120 204 200 208 300 207 S480 210 560 207 S700 204 760 209 L760 340 L0 340 Z" fill="#A98A66"/><rect x="148" y="190" width="4" height="18" fill="#5B4630"/><circle cx="150" cy="183" r="14" fill="#5E8A5A"/><rect x="191" y="197" width="3" height="11" fill="#5B4630"/><circle cx="192.5" cy="192" r="9" fill="#6E9A5B"/><line x1="398" y1="208" x2="398" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="393" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 393 196)" fill="#4E8A4A"/><ellipse cx="403" cy="192" rx="5.5" ry="2.6" transform="rotate(35 403 192)" fill="#5E9A58"/><ellipse cx="394" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 394 202)" fill="#5E9A58"/><line x1="412" y1="208" x2="412" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="407" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 407 196)" fill="#4E8A4A"/><ellipse cx="417" cy="192" rx="5.5" ry="2.6" transform="rotate(35 417 192)" fill="#5E9A58"/><ellipse cx="408" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 408 202)" fill="#5E9A58"/><line x1="426" y1="208" x2="426" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="421" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 421 196)" fill="#4E8A4A"/><ellipse cx="431" cy="192" rx="5.5" ry="2.6" transform="rotate(35 431 192)" fill="#5E9A58"/><ellipse cx="422" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 422 202)" fill="#5E9A58"/><line x1="440" y1="208" x2="440" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="435" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 435 196)" fill="#4E8A4A"/><ellipse cx="445" cy="192" rx="5.5" ry="2.6" transform="rotate(35 445 192)" fill="#5E9A58"/><ellipse cx="436" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 436 202)" fill="#5E9A58"/><line x1="468" y1="208" x2="468" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="463" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 463 196)" fill="#4E8A4A"/><ellipse cx="473" cy="192" rx="5.5" ry="2.6" transform="rotate(35 473 192)" fill="#5E9A58"/><ellipse cx="464" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 464 202)" fill="#5E9A58"/><line x1="482" y1="208" x2="482" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="477" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 477 196)" fill="#4E8A4A"/><ellipse cx="487" cy="192" rx="5.5" ry="2.6" transform="rotate(35 487 192)" fill="#5E9A58"/><ellipse cx="478" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 478 202)" fill="#5E9A58"/><line x1="496" y1="208" x2="496" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="491" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 491 196)" fill="#4E8A4A"/><ellipse cx="501" cy="192" rx="5.5" ry="2.6" transform="rotate(35 501 192)" fill="#5E9A58"/><ellipse cx="492" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 492 202)" fill="#5E9A58"/><line x1="510" y1="208" x2="510" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="505" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 505 196)" fill="#4E8A4A"/><ellipse cx="515" cy="192" rx="5.5" ry="2.6" transform="rotate(35 515 192)" fill="#5E9A58"/><ellipse cx="506" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 506 202)" fill="#5E9A58"/><line x1="524" y1="208" x2="524" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="519" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 519 196)" fill="#4E8A4A"/><ellipse cx="529" cy="192" rx="5.5" ry="2.6" transform="rotate(35 529 192)" fill="#5E9A58"/><ellipse cx="520" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 520 202)" fill="#5E9A58"/><line x1="552" y1="208" x2="552" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="547" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 547 196)" fill="#4E8A4A"/><ellipse cx="557" cy="192" rx="5.5" ry="2.6" transform="rotate(35 557 192)" fill="#5E9A58"/><ellipse cx="548" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 548 202)" fill="#5E9A58"/><line x1="566" y1="208" x2="566" y2="191" stroke="#3F7A3C" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="561" cy="196" rx="5.5" ry="2.6" transform="rotate(-35 561 196)" fill="#4E8A4A"/><ellipse cx="571" cy="192" rx="5.5" ry="2.6" transform="rotate(35 571 192)" fill="#5E9A58"/><ellipse cx="562" cy="202" rx="4.5" ry="2.2" transform="rotate(-30 562 202)" fill="#5E9A58"/><text x="188" y="236" font-size="11" font-weight="600" fill="#2B1F12" text-anchor="middle" style="font-family:var(--display)">Terrain and land cover</text><text x="566" y="178" font-size="11.5" font-weight="700" fill="#2F5E2C" text-anchor="middle" style="font-family:var(--display)">Crops</text></g><g class="hot" data-k="soil" tabindex="0" role="button" aria-label="Soil properties"><title>Soil properties</title><rect x="0" y="252" width="760" height="88" fill="#8C6D4B"/><text x="640" y="312" font-size="11.5" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:var(--display)">Soil properties</text></g><g class="hot" data-k="radar" tabindex="0" role="button" aria-label="Sentinel-1 radar satellite"><title>Sentinel-1 radar satellite</title><polygon points="90,68 36,207 144,207" fill="#0F6E75" fill-opacity=".2" stroke="#0F6E75" stroke-dasharray="4 4"/><ellipse cx="90" cy="208" rx="62" ry="9" fill="url(#fpR)"/><ellipse cx="90" cy="208" rx="54" ry="6" fill="none" stroke="#0F6E75" stroke-width="2"/><rect x="80" y="53" width="20" height="14" rx="2" fill="#fff" stroke="#16262F" stroke-width="1.2"/><rect x="56" y="56" width="22" height="8" fill="#0F6E75"/><rect x="102" y="56" width="22" height="8" fill="#0F6E75"/><text x="90" y="34" font-size="11.5" font-weight="700" fill="#0F6E75" text-anchor="middle" style="font-family:var(--display)">Sentinel-1 radar</text></g><g class="hot" data-k="optical" tabindex="0" role="button" aria-label="Sentinel-2 optical and MODIS satellites"><title>Sentinel-2 optical and MODIS satellites</title><polygon points="270,68 222,207 318,207" fill="#C79A3A" fill-opacity=".24" stroke="#C79A3A" stroke-dasharray="4 4"/><ellipse cx="270" cy="208" rx="56" ry="9" fill="url(#fpO)"/><ellipse cx="270" cy="208" rx="48" ry="6" fill="none" stroke="#B88A2C" stroke-width="2"/><rect x="260" y="53" width="20" height="14" rx="2" fill="#fff" stroke="#16262F" stroke-width="1.2"/><rect x="236" y="56" width="22" height="8" fill="#C79A3A"/><rect x="282" y="56" width="22" height="8" fill="#C79A3A"/><text x="270" y="27" font-size="11.5" font-weight="700" fill="#8A6414" text-anchor="middle" style="font-family:var(--display)">Sentinel-2 optical</text><text x="270" y="40" font-size="10.5" font-weight="600" fill="#8A6414" text-anchor="middle" style="font-family:var(--display)">+ MODIS temperature</text></g><g class="hot" data-k="rain" tabindex="0" role="button" aria-label="Rain"><title>Rain</title><ellipse cx="455" cy="224" rx="78" ry="14" fill="#6E5236" fill-opacity=".5"/><ellipse cx="455" cy="238" rx="60" ry="9" fill="#6E5236" fill-opacity=".35"/><circle cx="430" cy="68" r="16" fill="#fff" stroke="#9DB3B8"/><circle cx="452" cy="58" r="20" fill="#fff" stroke="#9DB3B8"/><circle cx="476" cy="68" r="16" fill="#fff" stroke="#9DB3B8"/><rect x="428" y="66" width="50" height="18" rx="9" fill="#fff"/><line x1="424" y1="94" x2="415" y2="200" stroke="#4F8FA3" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/><line x1="442" y1="94" x2="433" y2="200" stroke="#4F8FA3" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/><line x1="460" y1="94" x2="451" y2="200" stroke="#4F8FA3" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/><line x1="478" y1="94" x2="469" y2="200" stroke="#4F8FA3" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/><text x="452" y="30" font-size="11.5" font-weight="700" fill="#2F6B7C" text-anchor="middle" style="font-family:var(--display)">Rain</text></g><g class="hot" data-k="evap" tabindex="0" role="button" aria-label="Sun and evaporation"><title>Sun and evaporation</title><circle cx="655" cy="52" r="17" fill="#E9C46A"/><line x1="679.0" y1="52.0" x2="687.0" y2="52.0" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="672.0" y1="69.0" x2="677.6" y2="74.6" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="655.0" y1="76.0" x2="655.0" y2="84.0" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="638.0" y1="69.0" x2="632.4" y2="74.6" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="631.0" y1="52.0" x2="623.0" y2="52.0" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="638.0" y1="35.0" x2="632.4" y2="29.4" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="655.0" y1="28.0" x2="655.0" y2="20.0" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><line x1="672.0" y1="35.0" x2="677.6" y2="29.4" stroke="#D9A93B" stroke-width="2.2" stroke-linecap="round"/><path d="M612 205 q9 -14 0 -26 t0 -26 t0 -26" fill="none" stroke="#B88A2C" stroke-width="2" marker-end="url(#ev)"/><path d="M654 205 q9 -14 0 -26 t0 -26 t0 -26" fill="none" stroke="#B88A2C" stroke-width="2" marker-end="url(#ev)"/><path d="M696 205 q9 -14 0 -26 t0 -26 t0 -26" fill="none" stroke="#B88A2C" stroke-width="2" marker-end="url(#ev)"/><text x="654" y="120" font-size="11.5" font-weight="700" fill="#8A6414" text-anchor="middle" style="font-family:var(--display)">Evaporation</text></g><g class="hot" data-k="sensor" tabindex="0" role="button" aria-label="Ground sensors"><title>Ground sensors</title><rect x="330" y="196" width="20" height="10" rx="2" fill="#16262F"/><line x1="340" y1="206" x2="340" y2="294" stroke="#16262F" stroke-width="3"/><circle cx="340" cy="230" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="340" cy="258" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="340" cy="286" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><rect x="442" y="196" width="20" height="10" rx="2" fill="#16262F"/><line x1="452" y1="206" x2="452" y2="294" stroke="#16262F" stroke-width="3"/><circle cx="452" cy="230" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="452" cy="258" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="452" cy="286" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><rect x="526" y="196" width="20" height="10" rx="2" fill="#16262F"/><line x1="536" y1="206" x2="536" y2="294" stroke="#16262F" stroke-width="3"/><circle cx="536" cy="230" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="536" cy="258" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><circle cx="536" cy="286" r="5.5" fill="#E9C46A" stroke="#16262F" stroke-width="1.4"/><text x="356" y="266" font-size="11.5" font-weight="700" fill="#fff" text-anchor="start" style="font-family:var(--display)">Ground sensors</text></g></svg></div>
+          <p class="panel" id="sm-info" aria-live="polite"><b>Click any part of the picture</b> to see what it adds to the model.</p>
+          <div class="flow"><span class="lane">From the picture to a number</span><span class="n">Satellite images</span><span class="n">Rain and weather</span><span class="n">Soil, terrain, land cover</span><span class="a">→</span><span class="s"><span class="n key-n">Model</span><span class="a">→</span></span><span class="s"><span class="n">Soil moisture estimate</span><span class="a">→</span></span><span class="n">Checked against ground sensors</span></div>
+          <p class="note">A simple picture of the setup, not to scale.</p>
+        </figure>
+      </details>
+      <figure class="viz">
+        <p class="viz-sub">Against SMAP L4 v007, on the same observations</p>
+        <div class="bars">
+          <div class="bar us"><span class="lab">My model (PRISM-enhanced LightGBM)</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
+          <div class="bar other"><span class="lab">SMAP L4 v007 surface moisture</span><span class="track"><i style="width:67.5%"></i></span><span class="val">0.0540</span></div>
+        </div>
+        <figcaption><b>Shorter is better.</b> Median per-station ubRMSE in m³/m³, on 106,584 matched observations from 340 U.S. stations, with station-held-out cross-validation and identical de-biasing.</figcaption>
+      </figure>
       <details class="ask">
         <summary>How big is the error, compared with real sensors?</summary>
         <figure class="viz">
@@ -285,53 +354,79 @@
           <figcaption><b>My model lands next to a real sensor 5 to 10 km away.</b> Median error in m³/m³ on my station panel, scored the same way for every row. Shorter is better.</figcaption>
         </figure>
       </details>
-
-      <figure class="viz">
-        <p class="viz-sub">Against SMAP L4 v007, on the same observations</p>
-        <div class="bars">
-          <div class="bar us"><span class="lab">My model (PRISM-enhanced LightGBM)</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
-          <div class="bar other"><span class="lab">SMAP L4 v007 surface moisture</span><span class="track"><i style="width:67.5%"></i></span><span class="val">0.0540</span></div>
-        </div>
-        <figcaption><b>Shorter is better.</b> Median per-station ubRMSE in m³/m³, on 106,584 matched observations from 340 U.S. stations, with station-held-out cross-validation and identical de-biasing.</figcaption>
-      </figure>
-      <div class="viz explorer">
-        <p class="viz-sub">What went into the dataset</p>
+      <details class="ask">
+        <summary>What went into the dataset</summary>
+        <div class="viz explorer">
         <div class="seg" role="tablist" aria-label="Data sources" data-tabs>
           <button type="button" role="tab" id="ds-t1" aria-controls="ds-p1">Ground truth</button>
           <button type="button" role="tab" id="ds-t2" aria-controls="ds-p2">Weather</button>
           <button type="button" role="tab" id="ds-t3" aria-controls="ds-p3">Soil and terrain</button>
           <button type="button" role="tab" id="ds-t4" aria-controls="ds-p4">Satellite</button>
         </div>
-        <div class="panel" role="tabpanel" id="ds-p1" aria-labelledby="ds-t1"><b>3.06M station-days</b> of ground observations from <b>1,599 stations</b> in <b>56 networks</b> (ISMN).</div>
+        <div class="panel" role="tabpanel" id="ds-p1" aria-labelledby="ds-t1"><b>3.06M station-days</b> of ground observations from <b>1,599 stations</b> in <b>56 networks</b> (ISMN). The baseline started with 120 Oklahoma Mesonet stations and scaled to 1,599 ISMN stations worldwide.</div>
         <div class="panel" role="tabpanel" id="ds-p2" aria-labelledby="ds-t2" hidden>ERA5-Land and CHIRPS weather, plus IMERG and PRISM precipitation.</div>
         <div class="panel" role="tabpanel" id="ds-p3" aria-labelledby="ds-t3" hidden>SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</div>
         <div class="panel" role="tabpanel" id="ds-p4" aria-labelledby="ds-t4" hidden><b>1.44M Sentinel-1 radar acquisitions</b>, Sentinel-2 optical indices, and MODIS land-surface temperature.</div>
       </div>
-      <ul>
-        <li><b>Method.</b> A gradient-boosted model estimates today’s moisture, and temporal residual corrections adjust it. A 90-day weather and satellite CNN extension is in multi-seed evaluation.</li>
-        <li><b>Skill metric.</b> 1 − A/B compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows what the model learns beyond the seasonal cycle.</li>
-        <li><b>Careful joins.</b> Dates are corrected to local time, only past weather is used, and every satellite acquisition is kept.</li>
-      </ul>
+      </details>
       <details class="ask">
-        <summary>How much can one radar image tell you?</summary>
+        <summary>What the experiments showed</summary>
         <figure class="viz">
-        <div class="gauge" role="img" aria-label="A bar from 0 to 1. One Sentinel-1 observation reaches R squared of about 0.29 at most.">
-          <span class="on" style="width:29%">R² 0.29</span>
-          <span class="off">out of reach with one image</span>
-        </div>
-        <figcaption><b>A signal-to-noise variance ratio of 0.414 caps a single Sentinel-1 observation at R² ≈ 0.29.</b> The radar’s sensitivity to soil moisture is correct (13.1 dB per m³/m³); the radar ceiling is physical, not algorithmic.</figcaption>
+          <p class="viz-sub">Against a published Sentinel-1 product</p>
+          <div class="bars">
+            <div class="bar us"><span class="lab">My model</span><span class="track"><i style="width:56.3%"></i></span><span class="val">0.045</span></div>
+            <div class="bar other"><span class="lab">Published Sentinel-1 product</span><span class="track"><i style="width:90%"></i><em style="left:90%;width:7.5%"></em></span><span class="val">0.072–0.078</span></div>
+          </div>
+          <figcaption><b>Shorter is better.</b> ubRMSE in m³/m³ on SCAN and USCRN stations, same networks and metric for both.</figcaption>
         </figure>
+        <figure class="viz">
+          <p class="viz-sub">What mattered more than the model architecture</p>
+          <div class="bars">
+            <div class="bar us"><span class="lab">Cleaning the labels</span><span class="track"><i style="width:67%"></i></span><span class="val">+0.067 R²</span></div>
+            <div class="bar us"><span class="lab">Adding precipitation</span><span class="track"><i style="width:98%"></i></span><span class="val">+0.098 R²</span></div>
+          </div>
+          <figcaption><b>Across 87 model variants</b> (CNN, TCN, GRU, Transformer; multi-seed on H200 GPUs), these two changes outweighed every architecture change. Paired tests across shared seeds reversed several conclusions.</figcaption>
+        </figure>
+        <figure class="viz">
+          <p class="viz-sub">How much one radar image can tell you</p>
+          <div class="gauge" role="img" aria-label="A bar from 0 to 1. One Sentinel-1 observation reaches R squared of about 0.29 at most.">
+            <span class="on" style="width:29%">R² 0.29</span>
+            <span class="off">out of reach with one image</span>
+          </div>
+          <figcaption><b>A signal-to-noise variance ratio of 0.414 caps a single Sentinel-1 observation at R² ≈ 0.29.</b> The radar’s sensitivity to soil moisture is correct (13.1 dB per m³/m³); the radar ceiling is physical, not algorithmic.</figcaption>
+        </figure>
+      </details>
+      <details class="ask">
+        <summary>How I built it</summary>
+        <ul>
+          <li><b>Method.</b> A gradient-boosted model estimates today’s moisture, and temporal residual corrections adjust it. A 90-day weather and satellite CNN extension is in multi-seed evaluation.</li>
+          <li><b>Skill metric.</b> 1 − A/B compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows what the model learns beyond the seasonal cycle.</li>
+          <li><b>Free inputs only.</b> The baseline is a free-data reference for a satellite-sensor startup: Sentinel-1, Sentinel-2, ERA5-Land, and CHIRPS through Google Earth Engine, with station-wise splits.</li>
+          <li><b>Careful joins.</b> Dates are corrected to local time, only past weather is used, and every satellite acquisition is kept.</li>
+        </ul>
       </details>
     </div>
 
-    <div class="project" id="p-chronos" data-tags="">
+    <div class="project" id="p-chronos" data-tags="Time-Series Modeling">
       <h3>Adaptive time-series tokenization and forecasting</h3>
       <p class="where">Research in progress.</p>
       <p class="result">Extends Chronos so its token boundaries adapt, guided by per-bucket error and uncertainty, while the vocabulary size stays fixed.</p>
-      <ul>
-        <li><b>Training.</b> Embeddings are remapped by token count and optimizer state is reset whenever boundaries change, including the shared input and output embeddings.</li>
-        <li><b>Evaluation.</b> Chronos and PatchTST run with held-out series tails and rolling-origin backtests, scored by MASE and WQL. Tests check vocabulary size, remapping, and that training and evaluation targets never overlap.</li>
-      </ul>
+      <details class="ask">
+        <summary>See how the tokens adapt</summary>
+        <div class="viz" id="tok">
+          <div class="tokbar" id="tok-bar" role="img" aria-label="Eight forecast-value buckets with a bar showing the error in each. Pressing the button splits the highest-error bucket and merges two quiet neighbors."></div>
+          <div class="seg"><button type="button" id="tok-go" class="act">Adapt the tokens</button><button type="button" id="tok-reset">Reset</button></div>
+          <p class="panel" id="tok-text" aria-live="polite"></p>
+          <p class="note">An illustration with made-up error values. Bar height is the forecast error in each bucket.</p>
+        </div>
+      </details>
+      <details class="ask">
+        <summary>How I built it</summary>
+        <ul>
+          <li><b>Training.</b> Embeddings are remapped by token count and optimizer state is reset whenever boundaries change, including the shared input and output embeddings.</li>
+          <li><b>Evaluation.</b> Chronos and PatchTST run with held-out series tails and rolling-origin backtests, scored by MASE and WQL. Tests check vocabulary size, remapping, and that training and evaluation targets never overlap.</li>
+        </ul>
+      </details>
     </div>
   </div>
 </section>
@@ -339,13 +434,21 @@
 <section id="projects">
   <h2>Systems projects</h2>
   <div class="entries">
-    <div class="project" id="p-translator" data-tags="PyTorch;Hugging Face;FastAPI;Redis;Celery;PostgreSQL;Docker">
+    <div class="project" id="p-translator" data-tags="PyTorch;Hugging Face;FastAPI;Celery;Redis;PostgreSQL;Docker;Prometheus">
       <h3>Translator</h3>
       <p class="where">FastAPI, Celery, Redis, PostgreSQL, Docker, PyTorch.</p>
       <div class="links"><a href="https://bartonhou.github.io/Translator/">Live demo</a><a href="https://github.com/BartonHou/Translator">Source code</a></div>
       <p class="result">A translation platform for 9 languages, with direct, streaming, and batch APIs.</p>
-      <div class="viz explorer" id="tx">
-        <p class="viz-sub">Try it: choose a request type and a language pair</p>
+      <details class="ask wide" open>
+        <summary>Architecture diagram</summary>
+        <figure class="viz">
+          <div class="arch-wrap"><svg class="arch" viewBox="0 0 760 388" role="img" aria-label="Translator architecture. The client calls a FastAPI service with direct, streaming and batch paths. Direct and streaming requests check Redis caches, then call OPUS-MT or NLLB-200 through a model manager. Batch jobs go through a Redis queue to Celery workers that use the same models, keep job state in PostgreSQL, and send a signed callback."><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#62747A"/></marker></defs><rect x="10" y="150" width="92" height="52" rx="8" fill="#fff" stroke="#16262F" stroke-width="1.2"/><text x="56" y="172" font-size="13" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Client</text><text x="56" y="189" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">your app</text><line x1="102" y1="176" x2="130" y2="176" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><rect x="130" y="30" width="140" height="300" rx="8" fill="#EEF3F3" stroke="#B9C7C8" stroke-width="1.2"/><text x="200" y="52" font-size="13" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">FastAPI service</text><text x="200" y="68" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">API keys + JWT,</text><text x="200" y="81" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">rate limits, quotas</text><rect x="145" y="95" width="110" height="40" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="200" y="119" font-size="11.5" font-weight="600" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Direct request</text><rect x="145" y="145" width="110" height="40" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="200" y="169" font-size="11.5" font-weight="600" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Streaming (SSE)</text><rect x="145" y="245" width="110" height="40" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="200" y="269" font-size="11.5" font-weight="600" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Batch or file job</text><rect x="310" y="95" width="130" height="90" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="375" y="125" font-size="13" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Redis</text><text x="375" y="144" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">sentence and</text><text x="375" y="157" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">text caches</text><rect x="310" y="215" width="130" height="50" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="375" y="236" font-size="13" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Redis</text><text x="375" y="252" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">job queue (Celery)</text><line x1="255" y1="115" x2="310" y2="125" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><line x1="255" y1="165" x2="310" y2="155" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><line x1="255" y1="265" x2="310" y2="250" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><rect x="470" y="200" width="120" height="75" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="530" y="224" font-size="12" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Celery workers</text><text x="530" y="243" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">run the job, then</text><text x="530" y="256" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">send a signed callback</text><line x1="440" y1="240" x2="470" y2="240" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><rect x="470" y="295" width="120" height="45" rx="8" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="530" y="314" font-size="12" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">PostgreSQL</text><text x="530" y="330" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">job state</text><line x1="530" y1="275" x2="530" y2="295" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><line x1="270" y1="317" x2="470" y2="317" stroke="#62747A" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ah)"/><text x="370" y="311" font-size="10" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">status polling</text><rect x="620" y="30" width="130" height="300" rx="8" fill="#EEF3F3" stroke="#B9C7C8" stroke-width="1.2"/><text x="685" y="52" font-size="13" font-weight="700" fill="#16262F" text-anchor="middle" style="font-family:var(--display)">Model manager</text><text x="685" y="68" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">loads on demand, LRU,</text><text x="685" y="81" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">GPU fp16 + warmup</text><rect x="632" y="100" width="106" height="70" rx="8" fill="#fff" stroke="#0F6E75" stroke-width="1.6"/><text x="685" y="126" font-size="12" font-weight="700" fill="#0F6E75" text-anchor="middle" style="font-family:var(--display)">OPUS-MT</text><text x="685" y="143" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">English pivot</text><text x="685" y="156" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">for other pairs</text><rect x="632" y="190" width="106" height="70" rx="8" fill="#fff" stroke="#0F6E75" stroke-width="1.6"/><text x="685" y="216" font-size="12" font-weight="700" fill="#0F6E75" text-anchor="middle" style="font-family:var(--display)">NLLB-200</text><text x="685" y="233" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">600M parameters</text><text x="685" y="246" font-size="10.5" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">Japanese, Korean</text><line x1="440" y1="140" x2="620" y2="140" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><text x="530" y="132" font-size="10" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">on a cache miss</text><line x1="590" y1="240" x2="620" y2="240" stroke="#62747A" stroke-width="1.6" marker-end="url(#ah)"/><rect x="10" y="350" width="740" height="28" rx="6" fill="#fff" stroke="#B9C7C8" stroke-width="1.2"/><text x="380" y="369" font-size="11" font-weight="500" fill="#55666E" text-anchor="middle" style="font-family:var(--display)">Prometheus metrics, liveness and readiness probes, request-ID logs. All services run in Docker Compose.</text></svg></div>
+          <figcaption><b>Quick requests check the Redis caches first</b> and call a model only on a miss. Batch and file jobs go through a Redis queue to Celery workers, with job state in PostgreSQL. Workers share the same caches and models.</figcaption>
+        </figure>
+      </details>
+      <details class="ask">
+        <summary>Try it: how a request is routed</summary>
+        <div class="viz explorer" id="tx">
         <div class="seg-label">Request type</div>
         <div class="seg" data-group="mode">
           <button type="button" aria-pressed="true" data-v="direct">Direct request</button>
@@ -361,20 +464,26 @@
         <div class="flow" id="tx-flow" aria-live="polite"></div>
         <p class="panel" id="tx-text"></p>
       </div>
-      <ul>
-        <li><b>Batch jobs leave the web request.</b> Redis-brokered Celery workers run them and PostgreSQL keeps the job state. A failed callback is retried on its own, so the translation never runs twice.</li>
-        <li><b>Two engines.</b> OPUS-MT models and one shared 600M-parameter NLLB model. Models load on demand, the least recently used one is evicted, and GPU runs use fp16 with warmup.</li>
-        <li><b>Less repeated work, safer access.</b> Sentence caches are shared across all paths. Each API key has quotas and sliding-window rate limits.</li>
-      </ul>
+      </details>
+      <details class="ask">
+        <summary>How I built it</summary>
+        <ul>
+          <li><b>Batch jobs leave the web request.</b> Redis-brokered Celery workers run them and PostgreSQL keeps the job state. A failed callback is retried on its own, so the translation never runs twice.</li>
+          <li><b>Two engines.</b> OPUS-MT models and one shared 600M-parameter NLLB model behind a lazy-loading, LRU-cached model manager. GPU runs use fp16 with warmup.</li>
+          <li><b>Safe for many users.</b> Hashed API keys and JWT, per-key sliding-window rate limits, and monthly quotas. Text and sentence caches in Redis avoid repeated inference.</li>
+          <li><b>Ready to run.</b> Prometheus metrics, liveness and readiness probes, and request-ID logs. A free public demo runs on GitHub Pages and Hugging Face ZeroGPU.</li>
+        </ul>
+      </details>
     </div>
 
-    <div class="project" id="p-world" data-tags="">
+    <div class="project" id="p-world" data-tags="JavaScript;Large Language Models (LLM)">
       <h3>World Signals</h3>
       <p class="where">Python, JavaScript, OpenAI API, GitHub Actions.</p>
       <div class="links"><a href="https://bartonhou.github.io/world_news/">Live demo</a><a href="https://github.com/BartonHou/world_news">Source code</a></div>
       <p class="result">An interactive 36-country map of each country’s top news and internet culture, explained for outsiders by a language model.</p>
-      <div class="viz explorer">
-        <p class="viz-sub">How the weekly refresh works</p>
+      <details class="ask">
+        <summary>How the weekly refresh works</summary>
+        <div class="viz explorer">
         <div class="seg" role="tablist" aria-label="Pipeline steps" data-tabs>
           <button type="button" role="tab" id="ws-t1" aria-controls="ws-p1">1 Collect</button>
           <button type="button" role="tab" id="ws-t2" aria-controls="ws-p2">2 Filter</button>
@@ -388,12 +497,15 @@
         <div class="panel" role="tabpanel" id="ws-p4" aria-labelledby="ws-t4" hidden>GitHub Actions refreshes static JSON every week. Cost stays near $6 a year, whatever the traffic.</div>
         <div class="panel" role="tabpanel" id="ws-p5" aria-labelledby="ws-t5" hidden>A 36-country map in vanilla JavaScript and SVG over GeoJSON, with no backend or database. <a href="https://bartonhou.github.io/world_news/">Open the live demo</a>.</div>
       </div>
-      <ul>
-        <li><b>Two pipelines.</b> News and internet culture are separated, because one trending feed was dominated by news. Hard-exclusion rules can be audited.</li>
-        <li><b>No model calls in the browser.</b> Explanations are generated in batch and served as scheduled static JSON. Failed sources have fallbacks, and the regression tests need no network.</li>
-      </ul>
+      </details>
+      <details class="ask">
+        <summary>How I built it</summary>
+        <ul>
+          <li><b>Two pipelines.</b> News and internet culture are separated, because one trending feed was dominated by news. Hard-exclusion rules can be audited.</li>
+          <li><b>No model calls in the browser.</b> Explanations are generated in batch and served as scheduled static JSON. Failed sources have fallbacks, and a pytest suite that needs no network runs on every push.</li>
+        </ul>
+      </details>
     </div>
-
   </div>
 </section>
 
@@ -406,23 +518,39 @@
       <p class="where">CS 5130, Applied Programming and Data Processing for AI.</p>
       <p>Assist with teaching, grading, and office hours.</p>
     </div>
-    <div>
+    <div id="w-ultipa" data-tags="React;Flask;Tailwind CSS">
       <p class="when">Jun. 2025 to Sep. 2025</p>
       <h3>Software Engineer Intern, Ultipa USA</h3>
-      <p>Validated 150+ graph-database (GQL) queries covering schema, inserts, indexing, and retrieval. Diagnosed query and data-model defects, built a Flask and React banking application, and wrote 10+ internal tutorials.</p>
+      <p>Validated 150+ graph-database (GQL) queries, built a secure banking web application, and wrote 10+ internal tutorials.</p>
+      <details class="ask">
+        <summary>What changed because of it</summary>
+        <ul>
+          <li><b>25% better.</b> Validating 150+ Graph Query Language queries for schema creation, data insertion, and indexing improved query accuracy and system stability by 25%.</li>
+          <li><b>99.9% data integrity.</b> A full-stack secure banking web application, with a React, Vite, and Tailwind CSS frontend and a Python and Flask backend, using RESTful APIs.</li>
+          <li><b>30% faster onboarding.</b> I diagnosed and fixed data-modeling and query-execution defects and wrote 10+ internal tutorials, which cut new-developer onboarding time by 30%.</li>
+        </ul>
+      </details>
     </div>
   </div>
 </section>
 
 <section id="skills">
   <h2>Skills</h2>
+  <div>
+  <p class="skill-out" id="skill-out" aria-live="polite">Click an outlined skill to see where I used it.</p>
   <dl>
+    <dt>Languages</dt>
+    <dd><span class="chips"><span class="chip plain">Python</span><span class="chip plain">Java</span><span class="chip plain">C</span><span class="chip plain">C++</span><span class="chip plain">Go</span><button type="button" class="chip" aria-pressed="false" data-skill="JavaScript">JavaScript</button><span class="chip plain">TypeScript</span><span class="chip plain">Kotlin</span><span class="chip plain">R</span><span class="chip plain">SQL</span><span class="chip plain">Bash/Shell</span></span></dd>
+    <dt>Frameworks</dt>
+    <dd><span class="chips"><button type="button" class="chip" aria-pressed="false" data-skill="PyTorch">PyTorch</button><span class="chip plain">TensorFlow</span><button type="button" class="chip" aria-pressed="false" data-skill="LightGBM">LightGBM</button><span class="chip plain">LangChain</span><span class="chip plain">LangGraph</span><button type="button" class="chip" aria-pressed="false" data-skill="Hugging Face">Hugging Face</button><button type="button" class="chip" aria-pressed="false" data-skill="React">React</button><span class="chip plain">Next.js</span><span class="chip plain">Node.js</span><button type="button" class="chip" aria-pressed="false" data-skill="Flask">Flask</button><button type="button" class="chip" aria-pressed="false" data-skill="FastAPI">FastAPI</button><button type="button" class="chip" aria-pressed="false" data-skill="Celery">Celery</button></span></dd>
+    <dt>Data and tools</dt>
+    <dd><span class="chips"><button type="button" class="chip" aria-pressed="false" data-skill="PostgreSQL">PostgreSQL</button><button type="button" class="chip" aria-pressed="false" data-skill="Redis">Redis</button><span class="chip plain">NumPy</span><button type="button" class="chip" aria-pressed="false" data-skill="Google Earth Engine">Google Earth Engine</button><button type="button" class="chip" aria-pressed="false" data-skill="Docker">Docker</button><span class="chip plain">Git</span><span class="chip plain">CI/CD</span><button type="button" class="chip" aria-pressed="false" data-skill="Prometheus">Prometheus</button><button type="button" class="chip" aria-pressed="false" data-skill="Tailwind CSS">Tailwind CSS</button></span></dd>
+    <dt>Concepts</dt>
+    <dd><span class="chips"><span class="chip plain">Machine Learning</span><span class="chip plain">Deep Learning</span><button type="button" class="chip" aria-pressed="false" data-skill="Time-Series Modeling">Time-Series Modeling</button><button type="button" class="chip" aria-pressed="false" data-skill="Remote Sensing">Remote Sensing</button><span class="chip plain">NLP</span><span class="chip plain">Retrieval-Augmented Generation (RAG)</span><button type="button" class="chip" aria-pressed="false" data-skill="Large Language Models (LLM)">Large Language Models (LLM)</button><span class="chip plain">REST APIs</span><span class="chip plain">Microservices</span><span class="chip plain">Distributed Systems</span></span></dd>
     <dt>Methods</dt>
-    <dd>Metric design, continuous-time encoding, adaptive quantization, conformal calibration, paired ablations, quantile regression.</dd>
-    <dt>Tools</dt>
-    <dd><span class="chips"><span class="chip plain">Python</span><span class="chip plain">R</span><span class="chip plain">SQL</span><button type="button" class="chip" aria-pressed="false" data-skill="PyTorch">PyTorch</button><button type="button" class="chip" aria-pressed="false" data-skill="Hugging Face">Hugging Face</button><button type="button" class="chip" aria-pressed="false" data-skill="LightGBM">LightGBM</button><button type="button" class="chip" aria-pressed="false" data-skill="Earth Engine">Earth Engine</button><button type="button" class="chip" aria-pressed="false" data-skill="FastAPI">FastAPI</button><button type="button" class="chip" aria-pressed="false" data-skill="Redis">Redis</button><button type="button" class="chip" aria-pressed="false" data-skill="Celery">Celery</button><button type="button" class="chip" aria-pressed="false" data-skill="PostgreSQL">PostgreSQL</button><button type="button" class="chip" aria-pressed="false" data-skill="Docker">Docker</button><span class="chip plain">Git</span></span>
-      <span class="skill-out" id="skill-out" aria-live="polite">Click a tool to see where I used it.</span></dd>
+    <dd><span class="chips"><span class="chip plain">Metric design</span><span class="chip plain">Continuous-time encoding</span><span class="chip plain">Adaptive quantization</span><span class="chip plain">Conformal calibration</span><span class="chip plain">Paired ablations</span><span class="chip plain">Quantile regression</span></span></dd>
   </dl>
+  </div>
 </section>
 
 </main>
@@ -612,11 +740,85 @@
       });
     });
     drawTx();
+    var txd = tx.closest("details");
+    if (txd) txd.addEventListener("toggle", function () { if (txd.open) drawTx(); });
+  }
+
+  // Token boundary demo (illustration)
+  var tokEl = document.getElementById("tok-bar");
+  if (tokEl) {
+    var start = [3, 5, 2, 9, 4, 2, 6, 3], bk, round = 0, flags = {};
+    var ttxt = document.getElementById("tok-text");
+    function resetTok() {
+      bk = start.map(function (e) { return { w: 1, e: e }; }); round = 0; flags = {}; drawTok();
+    }
+    function drawTok() {
+      var mx = Math.max.apply(null, bk.map(function (b) { return b.e; }));
+      tokEl.innerHTML = "";
+      bk.forEach(function (b, i) {
+        var d = document.createElement("div"); d.className = "tk" + (flags[i] ? " " + flags[i] : "");
+        d.style.flexGrow = b.w;
+        var bar = document.createElement("i"); bar.style.height = Math.max(6, b.e / mx * 100) + "%";
+        d.appendChild(bar); tokEl.appendChild(d);
+      });
+      ttxt.textContent = round === 0
+        ? "Tokens: " + bk.length + ". Eight equal buckets split the value range. Press the button to refine them."
+        : "Tokens: " + bk.length + ". Round " + round + ": the bucket with the highest error was split in two (teal), and two quiet neighbors were merged (ochre). The vocabulary size stays the same.";
+    }
+    function adapt() {
+      var n = bk.length, hi = 0, k;
+      for (k = 1; k < n; k++) if (bk[k].e > bk[hi].e) hi = k;
+      var best = -1, bs = 1e9;
+      for (k = 0; k < n - 1; k++) {
+        if (k === hi || k + 1 === hi) continue;
+        var sc = bk[k].e + bk[k + 1].e;
+        if (sc < bs) { bs = sc; best = k; }
+      }
+      var out = [], fl = {};
+      for (k = 0; k < n; k++) {
+        if (k === hi) {
+          fl[out.length] = "sp"; fl[out.length + 1] = "sp";
+          out.push({ w: bk[k].w / 2, e: bk[k].e * 0.6 }, { w: bk[k].w / 2, e: bk[k].e * 0.6 });
+        } else if (k === best) {
+          fl[out.length] = "mg";
+          out.push({ w: bk[k].w + bk[k + 1].w, e: Math.max(bk[k].e, bk[k + 1].e) * 1.1 }); k++;
+        } else out.push(bk[k]);
+      }
+      bk = out; flags = fl; round++; drawTok();
+    }
+    document.getElementById("tok-go").addEventListener("click", adapt);
+    document.getElementById("tok-reset").addEventListener("click", resetTok);
+    resetTok();
+  }
+
+  // Soil moisture picture
+  var sm = document.getElementById("sm");
+  if (sm) {
+    var INFO = {
+      radar: ["Sentinel-1 radar", "1.44M radar acquisitions, aligned to each satellite pass. The radar’s sensitivity to soil moisture is correct (13.1 dB per m³/m³), but one image has a signal-to-noise variance ratio of 0.414, which caps it near R² 0.29."],
+      optical: ["Sentinel-2 optical and MODIS", "Sentinel-2 optical indices and MODIS land-surface temperature, joined to the same satellite pass."],
+      rain: ["Rain", "Precipitation from CHIRPS, with IMERG and PRISM also integrated. Adding precipitation was one of the two biggest gains: +0.098 R², more than any architecture change."],
+      evap: ["Evaporation and weather", "Water leaves the soil by evaporation, which depends on the weather. ERA5-Land weather is one of the model’s inputs, and only past weather is used."],
+      terrain: ["Terrain and land cover", "SRTM terrain and ESA WorldCover land cover describe the surface above each station, such as the crop field in the picture."],
+      soil: ["Soil properties", "SoilGrids soil properties describe what the ground is made of at each station."],
+      sensor: ["Ground sensors", "ISMN stations give the measured moisture: 3.06M station-days from 1,599 stations in 56 networks. The model is scored on stations it never trained on."]
+    };
+    var info = document.getElementById("sm-info"), hots = [].slice.call(sm.querySelectorAll(".hot"));
+    function pickSm(h) {
+      hots.forEach(function (x) { x.classList.toggle("sel", x === h); });
+      var d = INFO[h.dataset.k]; info.innerHTML = "";
+      var b = document.createElement("b"); b.textContent = d[0] + ". "; info.appendChild(b);
+      info.appendChild(document.createTextNode(d[1]));
+    }
+    hots.forEach(function (h) {
+      h.addEventListener("click", function () { pickSm(h); });
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pickSm(h); } });
+    });
   }
 
   // Tool filter
   var chips = [].slice.call(document.querySelectorAll("button.chip"));
-  var projs = [].slice.call(document.querySelectorAll(".project[data-tags]"));
+  var projs = [].slice.call(document.querySelectorAll("[data-tags]"));
   var out = document.getElementById("skill-out"), cur = null;
   chips.forEach(function (c) {
     c.addEventListener("click", function () {
@@ -624,7 +826,7 @@
       chips.forEach(function (x) { x.setAttribute("aria-pressed", String(x === cur)); });
       if (!cur) {
         projs.forEach(function (p) { p.classList.remove("dim", "hit"); });
-        out.textContent = "Click a tool to see where I used it.";
+        out.textContent = "Click an outlined skill to see where I used it.";
         return;
       }
       var hits = [];
