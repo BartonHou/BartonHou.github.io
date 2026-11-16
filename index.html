@@ -122,6 +122,16 @@
     .bar .track { grid-column: 1; }
   }
 
+  details.ask { margin: 18px 0 6px; max-width: 68ch; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  details.ask + details.ask { border-top: 0; margin-top: 0; }
+  details.ask summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px;
+                        padding: 12px 2px; font: 700 1rem var(--display); color: var(--accent); }
+  details.ask summary::-webkit-details-marker { display: none; }
+  details.ask summary::before { content: "+"; flex: 0 0 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent);
+                                display: inline-flex; align-items: center; justify-content: center; font: 700 1rem/1 var(--display); }
+  details.ask[open] summary::before { content: "\2212"; background: var(--accent); color: #fff; }
+  details.ask summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+  details.ask .viz { margin: 4px 0 14px; }
   dl { margin: 0; max-width: 68ch; }
   dt { font: 700 1rem var(--display); margin-top: 0; }
   dd { margin: 2px 0 18px; }
@@ -213,6 +223,21 @@
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
       <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. SMAP L4 v007 scored 0.0540 on the same observations, so my error was 22% lower. Both used the same de-biasing and station-held-out cross-validation.</p>
+      <details class="ask">
+        <summary>How big is the error, compared with real sensors?</summary>
+        <figure class="viz">
+          <div class="bars">
+            <div class="bar "><span class="lab">That station’s own sensor, 7 days old</span><span class="track"><i style="width:41.1%"></i></span><span class="val">0.0329</span></div>
+            <div class="bar "><span class="lab">A real sensor 2 to 5 km away</span><span class="track"><i style="width:45.5%"></i></span><span class="val">0.0364</span></div>
+            <div class="bar us"><span class="lab">My model, with no sensor at the site</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
+            <div class="bar "><span class="lab">A real sensor 5 to 10 km away</span><span class="track"><i style="width:53.8%"></i></span><span class="val">0.0430</span></div>
+            <div class="bar "><span class="lab">Seasonal average for that day of the year</span><span class="track"><i style="width:70.4%"></i></span><span class="val">0.0563</span></div>
+            <div class="bar "><span class="lab">That station’s long-run average</span><span class="track"><i style="width:87.4%"></i></span><span class="val">0.0699</span></div>
+          </div>
+          <figcaption><b>My model lands next to a real sensor 5 to 10 km away.</b> Median error in m³/m³ on my station panel, scored the same way for every row. Shorter is better.</figcaption>
+        </figure>
+      </details>
+
       <figure class="viz">
         <p class="viz-sub">Against SMAP L4 v007, on the same observations</p>
         <div class="bars">
@@ -228,14 +253,16 @@
         <li>Ran the benchmark with PRISM-enhanced LightGBM on 106,584 matched observations, using station-held-out cross-validation and identical de-biasing for both models.</li>
         <li>Defined a skill metric, 1 − A/B, that compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows how much the model learns beyond the seasonal cycle.</li>
       </ul>
-      <figure class="viz">
-        <p class="viz-sub">How much one radar image can tell you</p>
+      <details class="ask">
+        <summary>How much can one radar image tell you?</summary>
+        <figure class="viz">
         <div class="gauge" role="img" aria-label="A bar from 0 to 1. One Sentinel-1 observation reaches R squared of about 0.29 at most.">
           <span class="on" style="width:29%">R² 0.29</span>
           <span class="off">out of reach with one image</span>
         </div>
         <figcaption><b>A signal-to-noise variance ratio of 0.414 caps a single Sentinel-1 observation at R² ≈ 0.29.</b> The radar’s sensitivity to soil moisture is correct (13.1 dB per m³/m³); the radar ceiling is physical, not algorithmic.</figcaption>
-      </figure>
+        </figure>
+      </details>
     </div>
 
     <div class="project">
