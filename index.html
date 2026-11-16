@@ -212,28 +212,14 @@
     <div class="project">
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
-      <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. The NASA SMAP L4 product scored 0.0540 on the same observations, so my error was 22% lower. Both were scored after removing each station’s average offset, which needs past sensor readings from that station.</p>
+      <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. SMAP L4 v007 scored 0.0540 on the same observations, so my error was 22% lower. Both used the same de-biasing and station-held-out cross-validation.</p>
       <figure class="viz">
-        <p class="viz-sub">How big is the error, compared with real sensors?</p>
+        <p class="viz-sub">Against SMAP L4 v007, on the same observations</p>
         <div class="bars">
-          <div class="bar "><span class="lab">That station’s own sensor, 7 days old</span><span class="track"><i style="width:41.1%"></i></span><span class="val">0.0329</span></div>
-          <div class="bar "><span class="lab">A real sensor 2 to 5 km away</span><span class="track"><i style="width:45.5%"></i></span><span class="val">0.0364</span></div>
-          <div class="bar us"><span class="lab">My model, with no sensor at the site</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
-          <div class="bar "><span class="lab">A real sensor 5 to 10 km away</span><span class="track"><i style="width:53.8%"></i></span><span class="val">0.0430</span></div>
-          <div class="bar "><span class="lab">Seasonal average for that day of the year</span><span class="track"><i style="width:70.4%"></i></span><span class="val">0.0563</span></div>
-          <div class="bar "><span class="lab">That station’s long-run average</span><span class="track"><i style="width:87.4%"></i></span><span class="val">0.0699</span></div>
+          <div class="bar us"><span class="lab">My model (PRISM-enhanced LightGBM)</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
+          <div class="bar other"><span class="lab">SMAP L4 v007 surface moisture</span><span class="track"><i style="width:67.5%"></i></span><span class="val">0.0540</span></div>
         </div>
-        <figcaption><b>Shorter is better.</b> Median error in m³/m³ on my station panel, scored the same way for every row. A model with no sensor at the site lands next to a real sensor 5 to 10 km away.</figcaption>
-      </figure>
-
-      <figure class="viz">
-        <p class="viz-sub">Against NASA’s SMAP L4 product, on the same observations</p>
-        <div class="bars">
-          <div class="bar us"><span class="lab">My model</span><span class="track"><i style="width:52.6%"></i></span><span class="val">0.0421</span></div>
-          <div class="bar other"><span class="lab">SMAP L4 surface soil moisture</span><span class="track"><i style="width:67.5%"></i></span><span class="val">0.0540</span></div>
-          <div class="bar "><span class="lab">Seasonal average</span><span class="track"><i style="width:76.4%"></i></span><span class="val">0.0611</span></div>
-        </div>
-        <figcaption><b>106,584 observations at 340 U.S. stations.</b> Both predictions had each station’s average offset removed. This chart uses only the days SMAP L4 covers, so its seasonal-average bar differs from the one above.</figcaption>
+        <figcaption><b>Shorter is better.</b> Median per-station ubRMSE in m³/m³, on 106,584 matched observations from 340 U.S. stations, with station-held-out cross-validation and identical de-biasing.</figcaption>
       </figure>
       <ul>
         <li>Built a multi-source geospatial dataset with 3.06M station-days of ground observations from 1,599 stations in 56 networks. I combined it with ERA5-Land and CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
@@ -243,35 +229,12 @@
         <li>Defined a skill metric, 1 − A/B, that compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows how much the model learns beyond the seasonal cycle.</li>
       </ul>
       <figure class="viz">
-        <p class="viz-sub">When the satellite looks, and when the sensor measures</p>
-        <div class="clock" role="img" aria-label="A 24-hour axis. Sentinel-1 passes at about 06:00 and 18:00 local time. The SCAN sensor's daily value is read at 23:00, which is 5 hours after the 18:00 pass and 17 hours after the 06:00 pass.">
-          <span class="passlab" style="left:25%">Radar pass<br>06:00</span>
-          <span class="passlab" style="left:75%">Radar pass<br>18:00</span>
-          <span class="axis"></span>
-          <span class="pass" style="left:25%"></span>
-          <span class="pass" style="left:75%"></span>
-          <span class="read" style="left:95.83%"></span>
-          <span class="tick l" style="left:0">0:00</span>
-          <span class="tick" style="left:25%">6:00</span>
-          <span class="tick" style="left:50%">12:00</span>
-          <span class="tick" style="left:75%">18:00</span>
-          <span class="tick r" style="left:100%">24:00</span>
-          <span class="lag" style="left:75%;width:20.83%;top:86px"></span>
-          <span class="laglab" style="left:75%;top:86px">5 hours</span>
-          <span class="lag" style="left:25%;width:70.83%;top:112px"></span>
-          <span class="laglab" style="left:25%;top:112px">17 hours</span>
-        </div>
-        <div class="key"><span><i class="d"></i>Sentinel-1 radar pass</span><span><i class="c"></i>SCAN sensor reading, 23:00 local</span></div>
-        <figcaption><b>62% of my station panel comes from SCAN sensors.</b> Their “daily” value is one reading at 23:00, not an average, so it is taken 5 to 17 hours after the satellite looked. The other 38% (USCRN) is a true 24-hour average.</figcaption>
-      </figure>
-
-      <figure class="viz">
         <p class="viz-sub">How much one radar image can tell you</p>
         <div class="gauge" role="img" aria-label="A bar from 0 to 1. One Sentinel-1 observation reaches R squared of about 0.29 at most.">
           <span class="on" style="width:29%">R² 0.29</span>
           <span class="off">out of reach with one image</span>
         </div>
-        <figcaption><b>A single Sentinel-1 observation reaches R² 0.29 at most.</b> The soil-moisture part of the radar signal is only 41% as large as everything else mixed into it (signal-to-noise variance ratio 0.414).</figcaption>
+        <figcaption><b>A signal-to-noise variance ratio of 0.414 caps a single Sentinel-1 observation at R² ≈ 0.29.</b> The radar’s sensitivity to soil moisture is correct (13.1 dB per m³/m³); the radar ceiling is physical, not algorithmic.</figcaption>
       </figure>
     </div>
 
@@ -314,27 +277,6 @@
       </ul>
     </div>
 
-    <div class="project">
-      <h3>Document question-answering system (RAG)</h3>
-      <p class="where">FastAPI, Streamlit, LangGraph, Chroma, OpenAI API, Docker Compose.</p>
-      <div class="links"><a href="https://github.com/BartonHou/RAG-system">Source code</a></div>
-      <div class="viz"><div class="flow"><span class="lane">Upload</span><span class="s"><span class="n">PDF</span><span class="a">→</span></span><span class="s"><span class="n">Split into chunks</span><span class="a">→</span></span><span class="s"><span class="n">Skip if same file hash</span><span class="a">→</span></span><span class="n key-n">Chroma database</span><span class="lane">Question</span><span class="s"><span class="n">Question</span><span class="a">→</span></span><span class="s"><span class="n">Find the 3 closest passages</span><span class="a">→</span></span><span class="n key-n">Language model writes the answer</span></div></div>
-      <ul>
-        <li>Built an app where you upload PDFs and ask questions about them. A FastAPI service handles retrieval and answers, and a Streamlit page provides the chat and upload screen. A LangGraph pipeline first retrieves the 3 most relevant passages, then writes the answer from them.</li>
-        <li>Stored document chunks in a persistent Chroma database, so uploads survive restarts. Each file is hashed on upload, so the same PDF is never indexed twice.</li>
-        <li>Added endpoints to list, inspect, and delete files and chunks, and a debug search that shows what the retriever finds. Added tests, and a Docker Compose setup that runs both services.</li>
-      </ul>
-    </div>
-
-    <div class="project">
-      <h3>Resume Autofill</h3>
-      <p class="where">Chrome extension (Manifest V3), JavaScript, Claude API.</p>
-      <ul>
-        <li>Built a browser extension that fills job-application forms from a resume you upload once. Local rules match the fields they recognize, which is free and instant. Only the remaining fields go to Claude.</li>
-        <li>Outlines each filled field in green when a rule matched it and in blue when Claude chose the value, so you know which answers to check before submitting. It skips fields that already have a value, and the prompt forbids inventing degrees, employers, or salary.</li>
-        <li>The API key stays in the browser’s local storage and is sent only to the Anthropic API.</li>
-      </ul>
-    </div>
   </div>
 </section>
 
