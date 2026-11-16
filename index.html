@@ -75,7 +75,7 @@
   li { margin-bottom: 8px; padding-left: 4px; }
   li::marker { color: var(--accent); }
   .project { border-left: 3px solid var(--accent); padding-left: 22px; }
-  .project .links { font: 500 .95rem var(--display); margin: 6px 0 0; display: flex; gap: 18px; }
+  .entries .links { font: 500 .95rem var(--display); margin: 6px 0 0; display: flex; gap: 18px; }
   .result { font-style: italic; }
 
   dl { margin: 0; max-width: 68ch; }
@@ -214,6 +214,27 @@
         <li>A batch job writes explanations for short multilingual titles ahead of time. The site serves scheduled static JSON, so the browser never calls a model or API. The project has fallbacks for failed sources and regression tests that need no network.</li>
       </ul>
     </div>
+
+    <div class="project">
+      <h3>Document question-answering system (RAG)</h3>
+      <p class="where">FastAPI, Streamlit, LangGraph, Chroma, OpenAI API, Docker Compose.</p>
+      <div class="links"><a href="https://github.com/BartonHou/RAG-system">Source code</a></div>
+      <ul>
+        <li>Built an app where you upload PDFs and ask questions about them. A FastAPI service handles retrieval and answers, and a Streamlit page provides the chat and upload screen. A LangGraph pipeline first retrieves the 3 most relevant passages, then writes the answer from them.</li>
+        <li>Stored document chunks in a persistent Chroma database, so uploads survive restarts. Each file is hashed on upload, so the same PDF is never indexed twice.</li>
+        <li>Added endpoints to list, inspect, and delete files and chunks, and a debug search that shows what the retriever finds. Added tests, and a Docker Compose setup that runs both services.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <h3>Resume Autofill</h3>
+      <p class="where">Chrome extension (Manifest V3), JavaScript, Claude API.</p>
+      <ul>
+        <li>Built a browser extension that fills job-application forms from a resume you upload once. Local rules match the fields they recognize, which is free and instant. Only the remaining fields go to Claude.</li>
+        <li>Outlines each filled field in green when a rule matched it and in blue when Claude chose the value, so you know which answers to check before submitting. It skips fields that already have a value, and the prompt forbids inventing degrees, employers, or salary.</li>
+        <li>The API key stays in the browser’s local storage and is sent only to the Anthropic API.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -230,6 +251,7 @@
       <p class="when">Jun. 2025 to Sep. 2025</p>
       <h3>Software Engineer Intern, Ultipa USA</h3>
       <p>Validated 150+ graph-database (GQL) queries covering schema, inserts, indexing, and retrieval. Diagnosed query and data-model defects, built a Flask and React banking application, and wrote 10+ internal tutorials.</p>
+      <div class="links"><a href="https://github.com/BartonHou/BankingSystem">Banking app source code</a></div>
     </div>
   </div>
 </section>
