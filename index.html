@@ -3,173 +3,280 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jingyuan Hou · Resume</title>
-<meta name="description" content="Jingyuan Hou: M.S. in AI at Northeastern University. Research in geospatial ML and time-series forecasting; builds ML systems.">
+<title>Jingyuan Hou</title>
+<meta name="description" content="Jingyuan Hou, M.S. student in Artificial Intelligence at Northeastern University. Predicts soil moisture from satellite and weather data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fafaf8; --fg: #1d1d1f; --muted: #62646a; --line: #e2e1dc;
-    --accent: #1a56db; --card: #ffffff; --chip: #eef1f7;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #131416; --fg: #ececee; --muted: #9a9ca3; --line: #2a2c31;
-            --accent: #7aa2ff; --card: #1a1b1e; --chip: #23252b; }
+    --ink: #0E2230;        /* hero background */
+    --ink-text: #E8EFEF;
+    --ink-muted: #8FA6AE;
+    --rain: #4FA3B5;
+    --model: #6FD0C4;
+    --obs: #E0B45A;
+    --paper: #F4F7F6;
+    --text: #16262F;
+    --muted: #55666E;
+    --rule: #CBD6D6;
+    --accent: #0F6E75;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "Literata", Georgia, "Times New Roman", serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--fg);
-         font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap { max-width: 820px; margin: 0 auto; padding: 0 16px; }
-  header { padding: 64px 0 32px; border-bottom: 1px solid var(--line); }
-  h1 { margin: 0; font-size: 2.4rem; letter-spacing: -0.02em; }
-  .tagline { color: var(--muted); margin: 6px 0 18px; font-size: 1.1rem; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .95rem; }
-  nav { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line);
-        z-index: 5; }
-  nav .wrap { display: flex; gap: 20px; overflow-x: auto; padding: 10px 16px; font-size: .9rem; }
-  nav a { color: var(--muted); white-space: nowrap; }
-  section { padding: 36px 0 8px; }
-  h2 { font-size: 1.05rem; text-transform: uppercase; letter-spacing: .08em;
-       color: var(--muted); margin: 0 0 18px; }
-  .row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .row .when { color: var(--muted); font-size: .9rem; white-space: nowrap; }
-  .item { margin-bottom: 26px; }
-  .item h3 { margin: 0; font-size: 1.08rem; }
-  .sub { color: var(--muted); font-size: .95rem; }
-  ul { margin: 8px 0 0; padding-left: 20px; }
-  li { margin-bottom: 6px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-          padding: 18px 20px; margin-bottom: 18px; }
-  .card h3 { margin: 0 0 2px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
-  .tags span { background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: .82rem; }
-  .skills dt { font-weight: 600; margin-top: 12px; }
-  .skills dd { margin: 2px 0 0; color: var(--muted); }
-  footer { padding: 40px 0 60px; color: var(--muted); font-size: .85rem; }
-  @media (max-width: 520px) { h1 { font-size: 1.9rem; } header { padding-top: 40px; } }
-  @media print { nav, footer { display: none; } body { background: #fff; color: #000; } }
+  body { margin: 0; background: var(--paper); color: var(--text);
+         font: 400 1.0625rem/1.68 var(--body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--obs); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------- Hero ---------- */
+  .hero { background: var(--ink); color: var(--ink-text); padding: 72px 0 0; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .hero h1 { font: 800 clamp(3rem, 9vw, 6.2rem)/0.95 var(--display); letter-spacing: -0.035em; margin: 0; }
+  .hero .lead { font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.45; max-width: 34ch;
+                margin: 22px 0 0; color: var(--ink-text); }
+  .hero .who { margin: 14px 0 0; color: var(--ink-muted); max-width: 60ch; }
+  .contact { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 26px 0 0; padding: 0; list-style: none;
+             font-family: var(--display); font-weight: 500; font-size: .98rem; }
+  .contact a { color: var(--ink-text); text-decoration-color: var(--ink-muted); }
+  .contact a:hover { text-decoration-color: var(--model); }
+
+  figure { margin: 44px 0 0; }
+  figure svg { display: block; width: 100%; height: auto; overflow: visible; }
+  figcaption { color: var(--ink-muted); font-size: .88rem; line-height: 1.5; padding: 14px 0 26px; max-width: 70ch; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0 0 6px; font: 500 .85rem var(--display); color: var(--ink-muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 7px; vertical-align: -1px; }
+
+  #model-line { stroke-dasharray: var(--len, 3000); stroke-dashoffset: var(--len, 3000);
+                transition: stroke-dashoffset 2.6s cubic-bezier(.3,.1,.2,1) .2s; }
+  .drawn #model-line { stroke-dashoffset: 0; }
+  #obs-dots circle, #rain-bars rect { opacity: 0; transition: opacity .5s ease; }
+  .drawn #obs-dots circle, .drawn #rain-bars rect { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    #model-line { transition: none; stroke-dashoffset: 0; }
+    #obs-dots circle, #rain-bars rect { transition: none; opacity: 1; }
+  }
+
+  /* ---------- Body ---------- */
+  main { padding-bottom: 40px; }
+  section { display: grid; grid-template-columns: 11rem 1fr; gap: 8px 40px;
+            padding: 56px 0 8px; border-top: 1px solid var(--rule); }
+  main section:first-child { border-top: 0; }
+  h2 { font: 700 1.2rem/1.3 var(--display); letter-spacing: -0.01em; margin: 3px 0 0; }
+  .entries > * + * { margin-top: 38px; }
+  h3 { font: 700 1.3rem/1.3 var(--display); letter-spacing: -0.015em; margin: 0; }
+  .when { font: 500 .9rem var(--display); color: var(--muted); margin: 0 0 4px; }
+  .where { color: var(--muted); margin: 2px 0 0; font-size: .98rem; }
+  p { margin: 10px 0 0; max-width: 68ch; }
+  ul { margin: 10px 0 0; padding-left: 1.1em; max-width: 68ch; }
+  li { margin-bottom: 8px; padding-left: 4px; }
+  li::marker { color: var(--accent); }
+  .project { border-left: 3px solid var(--accent); padding-left: 22px; }
+  .project .links { font: 500 .95rem var(--display); margin: 6px 0 0; display: flex; gap: 18px; }
+  .result { font-style: italic; }
+
+  dl { margin: 0; max-width: 68ch; }
+  dt { font: 700 1rem var(--display); margin-top: 0; }
+  dd { margin: 2px 0 18px; }
+
+  footer { border-top: 1px solid var(--rule); padding: 28px 0 56px; color: var(--muted); font-size: .9rem; }
+
+  @media (max-width: 760px) {
+    .hero { padding-top: 48px; }
+    section { grid-template-columns: 1fr; padding-top: 40px; }
+    h2 { margin-bottom: 12px; }
+  }
+  @media print {
+    .hero { background: #fff; color: #000; } .hero .lead, .hero .who, .contact a { color: #000; }
+    figure { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<header>
+<header class="hero">
   <div class="wrap">
     <h1>Jingyuan Hou</h1>
-    <p class="tagline">M.S. in Artificial Intelligence · geospatial ML, time-series forecasting, ML systems</p>
-    <div class="links">
-      <a href="mailto:hou.jingyu@northeastern.edu">hou.jingyu@northeastern.edu</a>
-      <a href="tel:+15716659470">(571) 665-9470</a>
-      <a href="https://github.com/BartonHou">GitHub</a>
-      <a href="https://www.linkedin.com/in/jingyuan-hou-9762242b8">LinkedIn</a>
-      <span class="sub">Portland, ME</span>
-    </div>
+    <p class="lead">I build models that predict soil moisture from satellite and weather data.</p>
+    <p class="who">Master’s student in Artificial Intelligence at Northeastern University, in Portland, Maine.</p>
+    <ul class="contact">
+      <li><a href="mailto:hou.jingyu@northeastern.edu">hou.jingyu@northeastern.edu</a></li>
+      <li><a href="tel:+15716659470">(571) 665-9470</a></li>
+      <li><a href="https://github.com/BartonHou">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/jingyuan-hou-9762242b8">LinkedIn</a></li>
+    </ul>
+
+    <figure>
+      <div class="legend" aria-hidden="true">
+        <span><i style="background:var(--rain)"></i>Rain</span>
+        <span><i style="background:var(--obs)"></i>Sensor reading</span>
+        <span><i style="background:var(--model)"></i>Model prediction</span>
+      </div>
+      <svg id="chart" viewBox="0 0 1000 300" role="img"
+           aria-label="Illustration: soil moisture rises after each rain event and then slowly dries. A model line follows the sensor readings.">
+        <g id="grid" stroke="#ffffff" stroke-opacity=".08"></g>
+        <g id="rain-bars" fill="var(--rain)"></g>
+        <g id="obs-dots" fill="var(--obs)"></g>
+        <path id="model-line" fill="none" stroke="var(--model)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <figcaption>
+        An illustration with made-up numbers. Soil gets wetter right after rain and dries out slowly.
+        My research asks how well a model can follow that curve using only satellite images and weather data.
+      </figcaption>
+    </figure>
   </div>
 </header>
-
-<nav><div class="wrap">
-  <a href="#education">Education</a>
-  <a href="#research">Research</a>
-  <a href="#projects">Projects</a>
-  <a href="#work">Work</a>
-  <a href="#skills">Skills</a>
-</div></nav>
 
 <main class="wrap">
 
 <section id="education">
   <h2>Education</h2>
-  <div class="item">
-    <div class="row"><h3>Northeastern University</h3><span class="when">Sep. 2025 – May 2027 (expected)</span></div>
-    <div class="sub">M.S. in Artificial Intelligence · GPA 3.58/4.0 · Portland, ME</div>
-  </div>
-  <div class="item">
-    <div class="row"><h3>Virginia Tech</h3><span class="when">Sep. 2021 – May 2025</span></div>
-    <div class="sub">B.S. in Computer Science · GPA 3.62/4.0 · Blacksburg, VA</div>
+  <div class="entries">
+    <div>
+      <p class="when">Sep. 2025 to May 2027 (expected)</p>
+      <h3>Northeastern University</h3>
+      <p class="where">M.S. in Artificial Intelligence, GPA 3.58/4.0. Portland, ME.</p>
+    </div>
+    <div>
+      <p class="when">Sep. 2021 to May 2025</p>
+      <h3>Virginia Tech</h3>
+      <p class="where">B.S. in Computer Science, GPA 3.62/4.0. Blacksburg, VA.</p>
+    </div>
   </div>
 </section>
 
 <section id="research">
-  <h2>Research Experience</h2>
+  <h2>Research</h2>
+  <div class="entries">
+    <div class="project">
+      <h3>Soil moisture data fusion and hybrid nowcasting</h3>
+      <p class="where">Sponsored research for Aperture Space, Inc.</p>
+      <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. The NASA SMAP L4 product scored 0.0540 on the same observations, so my error was 22% lower.</p>
+      <ul>
+        <li>Built a multi-source geospatial dataset with 3.06M station-days of ground observations from 1,599 stations in 56 networks. I combined it with ERA5-Land and CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
+        <li>Aligned 1.44M Sentinel-1 radar images, Sentinel-2 optical indices, and MODIS land-surface temperature to each satellite pass. The joins fix local dates, use only past weather, and keep every acquisition.</li>
+        <li>Designed a hybrid framework. A gradient-boosted model estimates the current moisture, and temporal residual corrections then adjust it. I also built a 90-day weather and satellite CNN extension with nested station holdouts and validation-selected fusion weights. Multi-seed evaluation is in progress.</li>
+        <li>Ran the benchmark with PRISM-enhanced LightGBM on 106,584 matched observations, using station-held-out cross-validation and identical de-biasing for both models.</li>
+        <li>Defined a skill metric, 1 − A/B, that compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows how much the model learns beyond the seasonal cycle.</li>
+      </ul>
+    </div>
 
-  <div class="item">
-    <h3>Soil Moisture Data Fusion and Hybrid Nowcasting</h3>
-    <div class="sub">Sponsored research, Aperture Space, Inc.</div>
-    <ul>
-      <li>Built a <b>multi-source geospatial soil-moisture dataset</b>: 3.06M station-days of ISMN ground observations (1,599 stations, 56 networks) combined with ERA5-Land/CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
-      <li>Built overpass-aligned panels from 1.44M Sentinel-1 SAR acquisitions, Sentinel-2 optical indices, and MODIS land-surface temperature, using spatial collocation, local-date correction, trailing-only weather windows, quality masks, and acquisition-preserving joins.</li>
-      <li>Designed a <b>hybrid time-series/nowcasting framework</b> that pairs a gradient-boosted current-observation estimate with temporal residual corrections. Implemented a 90-day weather/satellite CNN extension with out-of-fold base predictions, nested station holdouts, and validation-selected fusion weights (multi-seed evaluation in progress).</li>
-      <li>In a PRISM-enhanced LightGBM benchmark, reached <b>0.0421 m³/m³ median per-station ubRMSE</b> versus 0.0540 for SMAP L4 v007 (<b>22% lower</b>) on 106,584 matched observations from 340 U.S. stations, with station-held-out cross-validation and identical de-biasing.</li>
-      <li>Designed a <b>climatology-relative skill metric</b>, 1 − A/B, comparing model and seasonal-baseline RMSE on identical observations. It uses leave-one-year-out, ±15-day climatology and fixed station-bias correction to measure gains beyond seasonal predictability.</li>
-    </ul>
-  </div>
-
-  <div class="item">
-    <h3>Adaptive Time-Series Tokenization and Forecasting</h3>
-    <div class="sub">Research in progress</div>
-    <ul>
-      <li>Extended Chronos with an adaptive quantization prototype: per-bucket error/uncertainty scores guide boundary refinement, and an online controller uses EMA-smoothed token NLL and predictive entropy for constant-vocabulary split/merge updates.</li>
-      <li>Implemented count-weighted embedding remapping and optimizer-state resets when token boundaries change, handling shared input/output embeddings, with unit tests for vocabulary size, remapping, and update behavior.</li>
-      <li>Built Chronos and PatchTST training/evaluation paths with held-out series tails and rolling-origin backtests; implemented MASE and WQL, with tests checking that train and evaluation targets are disjoint.</li>
-    </ul>
+    <div class="project">
+      <h3>Adaptive time-series tokenization and forecasting</h3>
+      <p class="where">Research in progress.</p>
+      <ul>
+        <li>Extended the Chronos forecasting model with adaptive quantization. Per-bucket error and uncertainty scores guide where token boundaries move, and an online controller splits and merges tokens while keeping the vocabulary size fixed.</li>
+        <li>Remapped embeddings by token count and reset optimizer state when boundaries change, including the shared input and output embeddings. Unit tests cover vocabulary size, remapping, and updates.</li>
+        <li>Built Chronos and PatchTST training and evaluation paths with held-out series tails and rolling-origin backtests. Implemented MASE and WQL metrics, with tests that check training and evaluation targets never overlap.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <section id="projects">
-  <h2>Selected Systems Projects</h2>
-
-  <div class="card">
-    <div class="row">
-      <h3>Multilingual Transformer Inference Service</h3>
-      <span class="links"><a href="https://bartonhou.github.io/Translator/">Live demo</a><a href="https://github.com/BartonHou/Translator">GitHub</a></span>
+  <h2>Systems projects</h2>
+  <div class="entries">
+    <div class="project">
+      <h3>Multilingual translation service</h3>
+      <p class="where">FastAPI, Celery, Redis, PostgreSQL, Docker, PyTorch.</p>
+      <div class="links"><a href="https://bartonhou.github.io/Translator/">Live demo</a><a href="https://github.com/BartonHou/Translator">Source code</a></div>
+      <ul>
+        <li>Designed three ways to translate: a direct request, a sentence-by-sentence stream, and an asynchronous job, all sharing the same inference code.</li>
+        <li>Moved batch and file jobs out of the web request into Celery workers backed by Redis and PostgreSQL. Signed callbacks are retried on their own, so a failed callback never re-runs the translation.</li>
+        <li>Covers 9 languages with OPUS-MT models and one shared 600M-parameter NLLB model. Pairs without a direct model go through English. Models load on demand, the least recently used one is evicted, and GPU runs use fp16 with warmup.</li>
+        <li>Shared sentence caches across all paths. Added glossary protection, language detection, per-key quotas, and sliding-window rate limits.</li>
+      </ul>
     </div>
-    <div class="tags"><span>FastAPI</span><span>Celery</span><span>Redis</span><span>PostgreSQL</span><span>Docker</span><span>PyTorch</span></div>
-    <ul>
-      <li>Designed synchronous, sentence-streaming (SSE), and asynchronous job execution on shared orchestration and inference layers.</li>
-      <li>Decoupled batch/file inference from HTTP through Redis-brokered Celery workers and PostgreSQL job state. HMAC-signed callbacks run in separately retried tasks, so a failed callback never repeats inference.</li>
-      <li>Routed 9 languages across OPUS-MT and a shared 600M-parameter NLLB model, with English pivots, LRU model eviction, CUDA/fp16 execution, and warmup.</li>
-      <li>Shared sentence caches across all paths and added glossary protection, language detection, per-key quotas, and sliding-window rate limits.</li>
-    </ul>
-  </div>
 
-  <div class="card">
-    <div class="row">
-      <h3>World Signals: Multi-Source Information Selection</h3>
-      <span class="links"><a href="https://bartonhou.github.io/world_news/">Live demo</a><a href="https://github.com/BartonHou/world_news">GitHub</a></span>
+    <div class="project">
+      <h3>World Signals</h3>
+      <p class="where">Python, JavaScript, OpenAI API, GitHub Actions.</p>
+      <div class="links"><a href="https://bartonhou.github.io/world_news/">Live demo</a><a href="https://github.com/BartonHou/world_news">Source code</a></div>
+      <ul>
+        <li>Split news and internet culture into two pipelines, because one trending feed was dominated by news. Each country uses native-language sources with fixed quotas, and a language model rescores a limited set of candidates. Hard-exclusion rules can be audited.</li>
+        <li>A batch job writes explanations for short multilingual titles ahead of time. The site serves scheduled static JSON, so the browser never calls a model or API. The project has fallbacks for failed sources and regression tests that need no network.</li>
+      </ul>
     </div>
-    <div class="tags"><span>Python</span><span>JavaScript</span><span>OpenAI</span><span>GitHub Actions</span></div>
-    <ul>
-      <li>Separated news and internet-culture pipelines to fix news-dominated trend feeds, using native-language sources, source quotas, bounded LLM rescoring, and auditable hard-exclusion rules.</li>
-      <li>Added batch-generated explanations for short multilingual titles, candidate-level provenance, source-failure fallbacks, and network-free regression tests. Serves scheduled static JSON with no browser-side model or API calls.</li>
-    </ul>
   </div>
 </section>
 
 <section id="work">
-  <h2>Work Experience</h2>
-  <div class="item">
-    <div class="row"><h3>Teaching Assistant, Northeastern University</h3><span class="when">Sep. 2026 – Present</span></div>
-    <div class="sub">CS 5130 – Applied Programming and Data Processing for AI</div>
-    <ul><li>Assist with course instruction, assignment grading, and office hours.</li></ul>
-  </div>
-  <div class="item">
-    <div class="row"><h3>Software Engineer Intern, Ultipa USA</h3><span class="when">Jun. 2025 – Sep. 2025</span></div>
-    <ul><li>Validated 150+ GQL queries for graph schema, insertion, indexing, and retrieval; diagnosed query and data-model defects; developed a Flask/React banking application; authored 10+ internal tutorials.</li></ul>
+  <h2>Work</h2>
+  <div class="entries">
+    <div>
+      <p class="when">Sep. 2026 to present</p>
+      <h3>Teaching Assistant, Northeastern University</h3>
+      <p class="where">CS 5130, Applied Programming and Data Processing for AI.</p>
+      <p>Assist with teaching, grading, and office hours.</p>
+    </div>
+    <div>
+      <p class="when">Jun. 2025 to Sep. 2025</p>
+      <h3>Software Engineer Intern, Ultipa USA</h3>
+      <p>Validated 150+ graph-database (GQL) queries covering schema, inserts, indexing, and retrieval. Diagnosed query and data-model defects, built a Flask and React banking application, and wrote 10+ internal tutorials.</p>
+    </div>
   </div>
 </section>
 
 <section id="skills">
-  <h2>Technical Skills</h2>
-  <dl class="skills">
+  <h2>Skills</h2>
+  <dl>
     <dt>Methods</dt>
-    <dd>Metric design, continuous-time encoding, adaptive quantization, conformal calibration, paired ablations, quantile regression</dd>
+    <dd>Metric design, continuous-time encoding, adaptive quantization, conformal calibration, paired ablations, quantile regression.</dd>
     <dt>Tools</dt>
-    <dd>Python, R, SQL, PyTorch, Hugging Face, LightGBM, Earth Engine, FastAPI, Redis, Celery, PostgreSQL, Docker, Git</dd>
+    <dd>Python, R, SQL, PyTorch, Hugging Face, LightGBM, Earth Engine, FastAPI, Redis, Celery, PostgreSQL, Docker, Git.</dd>
   </dl>
 </section>
 
 </main>
 
-<footer><div class="wrap">© Jingyuan Hou</div></footer>
+<footer><div class="wrap">Jingyuan Hou</div></footer>
+
+<script>
+(function () {
+  // Illustrative series: fixed rain events, soil dries a little each day and jumps after rain.
+  var W = 1000, H = 300, N = 120, top = 8, rainMax = 70, plotTop = 100, plotBot = 285;
+  var rain = {6:22, 7:9, 21:34, 22:12, 38:18, 52:41, 53:20, 54:6, 70:15, 83:38, 84:16, 99:27, 100:10, 111:20};
+  var m = [], v = 0.14;
+  for (var t = 0; t < N; t++) { v = v * 0.935 + 0.02 + (rain[t] || 0) * 0.0042; m.push(v); }
+  var lo = Math.min.apply(null, m), hi = Math.max.apply(null, m);
+  function X(t) { return 12 + t * (W - 24) / (N - 1); }
+  function Y(x) { return plotBot - (x - lo) / (hi - lo) * (plotBot - plotTop); }
+  function noise(t) { return Math.sin(t * 12.9898) * 43758.5453 % 1; }
+
+  var NS = "http://www.w3.org/2000/svg", q = function (id) { return document.getElementById(id); };
+  var grid = q("grid"), bars = q("rain-bars"), dots = q("obs-dots"), line = q("model-line");
+
+  [plotTop + 20, plotTop + 85, plotBot].forEach(function (y) {
+    var l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", 0); l.setAttribute("x2", W); l.setAttribute("y1", y); l.setAttribute("y2", y);
+    grid.appendChild(l);
+  });
+  Object.keys(rain).forEach(function (k) {
+    var r = document.createElementNS(NS, "rect"), h = rain[k] / rainMax * 80 + 2;
+    r.setAttribute("x", X(+k) - 3); r.setAttribute("y", top); r.setAttribute("width", 6);
+    r.setAttribute("height", h); r.setAttribute("rx", 1.5);
+    bars.appendChild(r);
+  });
+  var d = "";
+  m.forEach(function (val, t) {
+    var model = val + noise(t + 3) * 0.006;
+    d += (t ? "L" : "M") + X(t).toFixed(1) + " " + Y(model).toFixed(1);
+    if (t % 2 === 0) {
+      var c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", X(t)); c.setAttribute("cy", Y(val + noise(t) * 0.02));
+      c.setAttribute("r", 3.2);
+      c.style.transitionDelay = (0.3 + t / N * 2.2) + "s";
+      dots.appendChild(c);
+    }
+  });
+  line.setAttribute("d", d);
+  try { line.style.setProperty("--len", Math.ceil(line.getTotalLength()) + 2); } catch (e) {}
+  Array.prototype.forEach.call(bars.children, function (r, i) { r.style.transitionDelay = (i * 0.12) + "s"; });
+  requestAnimationFrame(function () { requestAnimationFrame(function () { document.body.classList.add("drawn"); }); });
+})();
+</script>
 </body>
 </html>
