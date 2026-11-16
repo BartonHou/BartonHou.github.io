@@ -132,6 +132,46 @@
   details.ask[open] summary::before { content: "\2212"; background: var(--accent); color: #fff; }
   details.ask summary:hover { text-decoration: underline; text-underline-offset: 3px; }
   details.ask .viz { margin: 4px 0 14px; }
+  /* ---------- Interactive bits ---------- */
+  .top { position: sticky; top: 0; z-index: 10; background: rgba(244,247,246,.93);
+         -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); }
+  .top .wrap { display: flex; gap: 22px; overflow-x: auto; padding-top: 10px; padding-bottom: 8px; }
+  .top a { font: 500 .92rem var(--display); color: var(--muted); text-decoration: none; white-space: nowrap;
+           padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .top a:hover { color: var(--text); }
+  .top a.on { color: var(--accent); border-color: var(--accent); }
+  section { scroll-margin-top: 44px; }
+  .legend button { font: inherit; color: inherit; background: none; border: 0; padding: 2px 0; cursor: pointer;
+                   display: inline-flex; align-items: center; }
+  .legend button:hover { color: var(--ink-text); }
+  .legend button[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 6px; }
+  .seg button { font: 500 .85rem var(--display); border: 1px solid var(--rule); background: #fff; color: var(--text);
+                border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .seg button:hover { border-color: var(--accent); }
+  .seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .seg-label { font: 700 .8rem var(--display); color: var(--muted); margin-top: 12px; }
+  .panel { margin: 8px 0 0; padding: 12px 14px; background: #fff; border: 1px solid var(--rule); border-radius: 8px;
+           font-size: .98rem; line-height: 1.55; }
+  .panel[hidden] { display: none; }
+  .explorer .flow { margin-top: 12px; }
+  .explorer .flow .n { animation: pop .35s ease both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .explorer .flow .n { animation: none; } }
+  li b { font-family: var(--display); font-weight: 700; }
+  .result { margin-top: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: 500 .88rem var(--display); border: 1px solid var(--rule); background: #fff; color: var(--text);
+          border-radius: 999px; padding: 4px 12px; }
+  button.chip { cursor: pointer; border-color: var(--accent); color: var(--accent); }
+  button.chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .chip.plain { color: var(--muted); }
+  .skill-out { display: block; margin-top: 10px; color: var(--text); font-size: .95rem; }
+  .project { transition: opacity .2s; }
+  .project.dim { opacity: .3; }
+  .project.hit { box-shadow: -3px 0 0 var(--accent); }
+  @media print { .top { display: none; } }
+
   dl { margin: 0; max-width: 68ch; }
   dt { font: 700 1rem var(--display); margin-top: 0; }
   dd { margin: 2px 0 18px; }
@@ -164,11 +204,11 @@
     </ul>
 
     <figure>
-      <div class="legend" aria-hidden="true">
-        <span><i style="background:var(--rain)"></i>Rain (weather data)</span>
-        <span><i style="background:#fff;border-radius:2px;transform:rotate(45deg) scale(.85)"></i>Satellite pass</span>
-        <span><i style="background:var(--obs)"></i>Ground sensor</span>
-        <span><i style="background:var(--model)"></i>Model estimate</span>
+      <div class="legend">
+        <button type="button" aria-pressed="true" data-layer="rain-bars"><i style="background:var(--rain)"></i>Rain (weather data)</button>
+        <button type="button" aria-pressed="true" data-layer="passes"><i style="background:#fff;border-radius:2px;transform:rotate(45deg) scale(.85)"></i>Satellite pass</button>
+        <button type="button" aria-pressed="true" data-layer="obs-dots"><i style="background:var(--obs)"></i>Ground sensor</button>
+        <button type="button" aria-pressed="true" data-layer="model-line"><i style="background:var(--model)"></i>Model estimate</button>
       </div>
       <svg id="chart" viewBox="0 0 1000 340" role="img"
            aria-label="Interactive illustration. A time cursor moves across 120 days. Rain and satellite passes appear, and the model's soil moisture estimate follows the ground sensor.">
@@ -192,11 +232,19 @@
       </div>
       <figcaption>
         An illustration with made-up numbers. Press play or drag the slider to see how rain and satellite passes
-        feed the model’s estimate of soil moisture.
+        feed the model’s estimate of soil moisture. Click a label above to hide or show that layer.
       </figcaption>
     </figure>
   </div>
 </header>
+
+<nav class="top" aria-label="Sections"><div class="wrap">
+  <a href="#education">Education</a>
+  <a href="#research">Research</a>
+  <a href="#projects">Systems projects</a>
+  <a href="#work">Work</a>
+  <a href="#skills">Skills</a>
+</div></nav>
 
 <main class="wrap">
 
@@ -219,7 +267,7 @@
 <section id="research">
   <h2>Research</h2>
   <div class="entries">
-    <div class="project">
+    <div class="project" id="p-soil" data-tags="LightGBM;Earth Engine">
       <h3>Soil moisture data fusion and hybrid nowcasting</h3>
       <p class="where">Sponsored research for Aperture Space, Inc.</p>
       <p class="result">In a benchmark on 340 U.S. stations, my model’s median error was 0.0421 m³/m³. SMAP L4 v007 scored 0.0540 on the same observations, so my error was 22% lower. Both used the same de-biasing and station-held-out cross-validation.</p>
@@ -246,12 +294,23 @@
         </div>
         <figcaption><b>Shorter is better.</b> Median per-station ubRMSE in m³/m³, on 106,584 matched observations from 340 U.S. stations, with station-held-out cross-validation and identical de-biasing.</figcaption>
       </figure>
+      <div class="viz explorer">
+        <p class="viz-sub">What went into the dataset</p>
+        <div class="seg" role="tablist" aria-label="Data sources" data-tabs>
+          <button type="button" role="tab" id="ds-t1" aria-controls="ds-p1">Ground truth</button>
+          <button type="button" role="tab" id="ds-t2" aria-controls="ds-p2">Weather</button>
+          <button type="button" role="tab" id="ds-t3" aria-controls="ds-p3">Soil and terrain</button>
+          <button type="button" role="tab" id="ds-t4" aria-controls="ds-p4">Satellite</button>
+        </div>
+        <div class="panel" role="tabpanel" id="ds-p1" aria-labelledby="ds-t1"><b>3.06M station-days</b> of ground observations from <b>1,599 stations</b> in <b>56 networks</b> (ISMN).</div>
+        <div class="panel" role="tabpanel" id="ds-p2" aria-labelledby="ds-t2" hidden>ERA5-Land and CHIRPS weather, plus IMERG and PRISM precipitation.</div>
+        <div class="panel" role="tabpanel" id="ds-p3" aria-labelledby="ds-t3" hidden>SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</div>
+        <div class="panel" role="tabpanel" id="ds-p4" aria-labelledby="ds-t4" hidden><b>1.44M Sentinel-1 radar acquisitions</b>, Sentinel-2 optical indices, and MODIS land-surface temperature.</div>
+      </div>
       <ul>
-        <li>Built a multi-source geospatial dataset with 3.06M station-days of ground observations from 1,599 stations in 56 networks. I combined it with ERA5-Land and CHIRPS weather, SoilGrids soil properties, SRTM terrain, and ESA WorldCover land cover.</li>
-        <li>Aligned 1.44M Sentinel-1 radar images, Sentinel-2 optical indices, and MODIS land-surface temperature to each satellite pass. The joins fix local dates, use only past weather, and keep every acquisition.</li>
-        <li>Designed a hybrid framework. A gradient-boosted model estimates the current moisture, and temporal residual corrections then adjust it. I also built a 90-day weather and satellite CNN extension with nested station holdouts and validation-selected fusion weights. Multi-seed evaluation is in progress.</li>
-        <li>Ran the benchmark with PRISM-enhanced LightGBM on 106,584 matched observations, using station-held-out cross-validation and identical de-biasing for both models.</li>
-        <li>Defined a skill metric, 1 − A/B, that compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows how much the model learns beyond the seasonal cycle.</li>
+        <li><b>Method.</b> A gradient-boosted model estimates today’s moisture, and temporal residual corrections adjust it. A 90-day weather and satellite CNN extension is in multi-seed evaluation.</li>
+        <li><b>Skill metric.</b> 1 − A/B compares model error (A) with a seasonal-average baseline (B) on the same observations. It shows what the model learns beyond the seasonal cycle.</li>
+        <li><b>Careful joins.</b> Dates are corrected to local time, only past weather is used, and every satellite acquisition is kept.</li>
       </ul>
       <details class="ask">
         <summary>How much can one radar image tell you?</summary>
@@ -265,13 +324,13 @@
       </details>
     </div>
 
-    <div class="project">
+    <div class="project" id="p-chronos" data-tags="">
       <h3>Adaptive time-series tokenization and forecasting</h3>
       <p class="where">Research in progress.</p>
+      <p class="result">Extends Chronos so its token boundaries adapt, guided by per-bucket error and uncertainty, while the vocabulary size stays fixed.</p>
       <ul>
-        <li>Extended the Chronos forecasting model with adaptive quantization. Per-bucket error and uncertainty scores guide where token boundaries move, and an online controller splits and merges tokens while keeping the vocabulary size fixed.</li>
-        <li>Remapped embeddings by token count and reset optimizer state when boundaries change, including the shared input and output embeddings. Unit tests cover vocabulary size, remapping, and updates.</li>
-        <li>Built Chronos and PatchTST training and evaluation paths with held-out series tails and rolling-origin backtests. Implemented MASE and WQL metrics, with tests that check training and evaluation targets never overlap.</li>
+        <li><b>Training.</b> Embeddings are remapped by token count and optimizer state is reset whenever boundaries change, including the shared input and output embeddings.</li>
+        <li><b>Evaluation.</b> Chronos and PatchTST run with held-out series tails and rolling-origin backtests, scored by MASE and WQL. Tests check vocabulary size, remapping, and that training and evaluation targets never overlap.</li>
       </ul>
     </div>
   </div>
@@ -280,27 +339,58 @@
 <section id="projects">
   <h2>Systems projects</h2>
   <div class="entries">
-    <div class="project">
+    <div class="project" id="p-translator" data-tags="PyTorch;Hugging Face;FastAPI;Redis;Celery;PostgreSQL;Docker">
       <h3>Translator</h3>
       <p class="where">FastAPI, Celery, Redis, PostgreSQL, Docker, PyTorch.</p>
       <div class="links"><a href="https://bartonhou.github.io/Translator/">Live demo</a><a href="https://github.com/BartonHou/Translator">Source code</a></div>
-      <div class="viz"><div class="flow"><span class="lane">Quick translations</span><span class="s"><span class="n">Request</span><span class="a">→</span></span><span class="s"><span class="n">API: direct or sentence stream</span><span class="a">→</span></span><span class="s"><span class="n">Sentence cache</span><span class="a">→</span></span><span class="n key-n">OPUS-MT or NLLB model</span><span class="lane">Batch and file jobs</span><span class="s"><span class="n">Request</span><span class="a">→</span></span><span class="s"><span class="n">API</span><span class="a">→</span></span><span class="s"><span class="n">Redis queue</span><span class="a">→</span></span><span class="s"><span class="n">Celery worker</span><span class="a">→</span></span><span class="s"><span class="n">PostgreSQL result</span><span class="a">→</span></span><span class="n">Signed callback</span></div></div>
+      <p class="result">A translation platform for 9 languages, with direct, streaming, and batch APIs.</p>
+      <div class="viz explorer" id="tx">
+        <p class="viz-sub">Try it: choose a request type and a language pair</p>
+        <div class="seg-label">Request type</div>
+        <div class="seg" data-group="mode">
+          <button type="button" aria-pressed="true" data-v="direct">Direct request</button>
+          <button type="button" aria-pressed="false" data-v="stream">Sentence stream</button>
+          <button type="button" aria-pressed="false" data-v="batch">Batch or file job</button>
+        </div>
+        <div class="seg-label">Language pair</div>
+        <div class="seg" data-group="pair">
+          <button type="button" aria-pressed="true" data-v="en">English and another language</button>
+          <button type="button" aria-pressed="false" data-v="pivot">Neither language is English</button>
+          <button type="button" aria-pressed="false" data-v="cjk">Japanese or Korean</button>
+        </div>
+        <div class="flow" id="tx-flow" aria-live="polite"></div>
+        <p class="panel" id="tx-text"></p>
+      </div>
       <ul>
-        <li>Designed three ways to translate: a direct request, a sentence-by-sentence stream, and an asynchronous job, all sharing the same inference code.</li>
-        <li>Moved batch and file jobs out of the web request into Celery workers backed by Redis and PostgreSQL. Signed callbacks are retried on their own, so a failed callback never re-runs the translation.</li>
-        <li>Covers 9 languages with OPUS-MT models and one shared 600M-parameter NLLB model. Pairs without a direct model go through English. Models load on demand, the least recently used one is evicted, and GPU runs use fp16 with warmup.</li>
-        <li>Shared sentence caches across all paths. Added glossary protection, language detection, per-key quotas, and sliding-window rate limits.</li>
+        <li><b>Batch jobs leave the web request.</b> Redis-brokered Celery workers run them and PostgreSQL keeps the job state. A failed callback is retried on its own, so the translation never runs twice.</li>
+        <li><b>Two engines.</b> OPUS-MT models and one shared 600M-parameter NLLB model. Models load on demand, the least recently used one is evicted, and GPU runs use fp16 with warmup.</li>
+        <li><b>Less repeated work, safer access.</b> Sentence caches are shared across all paths. Each API key has quotas and sliding-window rate limits.</li>
       </ul>
     </div>
 
-    <div class="project">
+    <div class="project" id="p-world" data-tags="">
       <h3>World Signals</h3>
       <p class="where">Python, JavaScript, OpenAI API, GitHub Actions.</p>
       <div class="links"><a href="https://bartonhou.github.io/world_news/">Live demo</a><a href="https://github.com/BartonHou/world_news">Source code</a></div>
-      <div class="viz"><div class="flow"><span class="lane">Weekly refresh</span><span class="s"><span class="n">Google News, Reddit, YouTube</span><span class="a">→</span></span><span class="s"><span class="n">Rule-based filters</span><span class="a">→</span></span><span class="s"><span class="n key-n">Language model picks and explains</span><span class="a">→</span></span><span class="s"><span class="n">Static JSON</span><span class="a">→</span></span><span class="n">World map</span></div></div>
+      <p class="result">An interactive 36-country map of each country’s top news and internet culture, explained for outsiders by a language model.</p>
+      <div class="viz explorer">
+        <p class="viz-sub">How the weekly refresh works</p>
+        <div class="seg" role="tablist" aria-label="Pipeline steps" data-tabs>
+          <button type="button" role="tab" id="ws-t1" aria-controls="ws-p1">1 Collect</button>
+          <button type="button" role="tab" id="ws-t2" aria-controls="ws-p2">2 Filter</button>
+          <button type="button" role="tab" id="ws-t3" aria-controls="ws-p3">3 Pick and explain</button>
+          <button type="button" role="tab" id="ws-t4" aria-controls="ws-p4">4 Publish</button>
+          <button type="button" role="tab" id="ws-t5" aria-controls="ws-p5">5 Browse</button>
+        </div>
+        <div class="panel" role="tabpanel" id="ws-p1" aria-labelledby="ws-t1">Google News RSS, Reddit, and the YouTube Data API. A global rate-limit throttle, read-only Reddit OAuth in CI, and per-source fallback keep ingestion running.</div>
+        <div class="panel" role="tabpanel" id="ws-p2" aria-labelledby="ws-t2" hidden>Rule-based filters handle recall and coarse ranking by dropping, penalizing, or boosting items. That keeps the ranking easy to debug.</div>
+        <div class="panel" role="tabpanel" id="ws-p3" aria-labelledby="ws-t3" hidden>The language model does only two jobs: the final selection and the cross-cultural explanation.</div>
+        <div class="panel" role="tabpanel" id="ws-p4" aria-labelledby="ws-t4" hidden>GitHub Actions refreshes static JSON every week. Cost stays near $6 a year, whatever the traffic.</div>
+        <div class="panel" role="tabpanel" id="ws-p5" aria-labelledby="ws-t5" hidden>A 36-country map in vanilla JavaScript and SVG over GeoJSON, with no backend or database. <a href="https://bartonhou.github.io/world_news/">Open the live demo</a>.</div>
+      </div>
       <ul>
-        <li>Split news and internet culture into two pipelines, because one trending feed was dominated by news. Each country uses native-language sources with fixed quotas, and a language model rescores a limited set of candidates. Hard-exclusion rules can be audited.</li>
-        <li>A batch job writes explanations for short multilingual titles ahead of time. The site serves scheduled static JSON, so the browser never calls a model or API. The project has fallbacks for failed sources and regression tests that need no network.</li>
+        <li><b>Two pipelines.</b> News and internet culture are separated, because one trending feed was dominated by news. Hard-exclusion rules can be audited.</li>
+        <li><b>No model calls in the browser.</b> Explanations are generated in batch and served as scheduled static JSON. Failed sources have fallbacks, and the regression tests need no network.</li>
       </ul>
     </div>
 
@@ -330,7 +420,8 @@
     <dt>Methods</dt>
     <dd>Metric design, continuous-time encoding, adaptive quantization, conformal calibration, paired ablations, quantile regression.</dd>
     <dt>Tools</dt>
-    <dd>Python, R, SQL, PyTorch, Hugging Face, LightGBM, Earth Engine, FastAPI, Redis, Celery, PostgreSQL, Docker, Git.</dd>
+    <dd><span class="chips"><span class="chip plain">Python</span><span class="chip plain">R</span><span class="chip plain">SQL</span><button type="button" class="chip" aria-pressed="false" data-skill="PyTorch">PyTorch</button><button type="button" class="chip" aria-pressed="false" data-skill="Hugging Face">Hugging Face</button><button type="button" class="chip" aria-pressed="false" data-skill="LightGBM">LightGBM</button><button type="button" class="chip" aria-pressed="false" data-skill="Earth Engine">Earth Engine</button><button type="button" class="chip" aria-pressed="false" data-skill="FastAPI">FastAPI</button><button type="button" class="chip" aria-pressed="false" data-skill="Redis">Redis</button><button type="button" class="chip" aria-pressed="false" data-skill="Celery">Celery</button><button type="button" class="chip" aria-pressed="false" data-skill="PostgreSQL">PostgreSQL</button><button type="button" class="chip" aria-pressed="false" data-skill="Docker">Docker</button><span class="chip plain">Git</span></span>
+      <span class="skill-out" id="skill-out" aria-live="polite">Click a tool to see where I used it.</span></dd>
   </dl>
 </section>
 
@@ -437,6 +528,133 @@
 
   if (reduce) { tf = N - 1; render(); setPlaying(false); }
   else { render(); setPlaying(true); }
+})();
+</script>
+<script>
+(function () {
+  // Layer switches on the hero chart
+  [].forEach.call(document.querySelectorAll(".legend button"), function (b) {
+    b.addEventListener("click", function () {
+      var on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", String(on));
+      document.getElementById(b.dataset.layer).style.display = on ? "" : "none";
+    });
+  });
+
+  // Tab groups (dataset sources, World Signals steps)
+  [].forEach.call(document.querySelectorAll("[data-tabs]"), function (g) {
+    var tabs = [].slice.call(g.querySelectorAll("[role=tab]"));
+    function pick(t) {
+      tabs.forEach(function (b) {
+        var on = b === t;
+        b.setAttribute("aria-selected", String(on));
+        b.tabIndex = on ? 0 : -1;
+        document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+      });
+    }
+    tabs.forEach(function (b, i) {
+      b.addEventListener("click", function () { pick(b); });
+      b.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        var n = tabs[(i + d + tabs.length) % tabs.length];
+        n.focus(); pick(n); e.preventDefault();
+      });
+    });
+    pick(tabs[0]);
+  });
+
+  // Translator route explorer
+  var tx = document.getElementById("tx");
+  if (tx) {
+    var st = { mode: "direct", pair: "en" };
+    var flow = document.getElementById("tx-flow"), note = document.getElementById("tx-text");
+    var MODE = {
+      direct: { api: "API: waits for the result", out: "Whole translation",
+        txt: "A bounded synchronous request: the API waits, then returns the whole translation." },
+      stream: { api: "API: checks the route first", out: "Sentences, one at a time",
+        txt: "The API validates the route before streaming, then sends each sentence as soon as its translation is complete, followed by a completion event." },
+      batch: { api: "API: creates a job", out: "",
+        txt: "The job leaves the web request. A Redis-brokered Celery worker runs it and PostgreSQL keeps the job state. A signed callback runs as its own retried task, so a failed callback never repeats the translation." }
+    };
+    var PAIR = {
+      en: { models: ["OPUS-MT model"], txt: "A pair with English on one side goes to an OPUS-MT model." },
+      pivot: { models: ["OPUS-MT: into English", "OPUS-MT: out of English"], txt: "With neither language English, the text pivots through English: one OPUS-MT model into English, another out of it." },
+      cjk: { models: ["NLLB model (600M)"], txt: "Japanese and Korean go to the shared 600M-parameter NLLB model." }
+    };
+    function drawTx() {
+      var m = MODE[st.mode], pr = PAIR[st.pair], nodes = [["Request", 0], [m.api, 0]];
+      if (st.mode === "batch") nodes.push(["Redis queue", 0], ["Celery worker", 0]);
+      nodes.push(["Sentence cache", 0]);
+      pr.models.forEach(function (x) { nodes.push([x, 1]); });
+      if (st.mode === "batch") nodes.push(["PostgreSQL job state", 0], ["Signed callback", 0]);
+      else nodes.push([m.out, 0]);
+      flow.innerHTML = "";
+      nodes.forEach(function (n, i) {
+        var w = document.createElement("span"); w.className = "s";
+        var c = document.createElement("span");
+        c.className = "n" + (n[1] ? " key-n" : "");
+        c.style.animationDelay = (i * 70) + "ms";
+        c.textContent = n[0]; w.appendChild(c);
+        if (i < nodes.length - 1) { var a = document.createElement("span"); a.className = "a"; a.textContent = "\u2192"; w.appendChild(a); }
+        flow.appendChild(w);
+      });
+      note.textContent = m.txt + " " + pr.txt + " Sentences already in the cache skip the model.";
+    }
+    [].forEach.call(tx.querySelectorAll("[data-group]"), function (g) {
+      var btns = [].slice.call(g.querySelectorAll("button"));
+      btns.forEach(function (b) {
+        b.addEventListener("click", function () {
+          st[g.dataset.group] = b.dataset.v;
+          btns.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+          drawTx();
+        });
+      });
+    });
+    drawTx();
+  }
+
+  // Tool filter
+  var chips = [].slice.call(document.querySelectorAll("button.chip"));
+  var projs = [].slice.call(document.querySelectorAll(".project[data-tags]"));
+  var out = document.getElementById("skill-out"), cur = null;
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () {
+      cur = cur === c ? null : c;
+      chips.forEach(function (x) { x.setAttribute("aria-pressed", String(x === cur)); });
+      if (!cur) {
+        projs.forEach(function (p) { p.classList.remove("dim", "hit"); });
+        out.textContent = "Click a tool to see where I used it.";
+        return;
+      }
+      var hits = [];
+      projs.forEach(function (p) {
+        var ok = p.dataset.tags.split(";").indexOf(cur.dataset.skill) > -1;
+        p.classList.toggle("hit", ok); p.classList.toggle("dim", !ok);
+        if (ok) hits.push(p);
+      });
+      out.innerHTML = "";
+      var b = document.createElement("b"); b.textContent = cur.dataset.skill; out.appendChild(b);
+      out.appendChild(document.createTextNode(" is used in: "));
+      hits.forEach(function (p, i) {
+        var a = document.createElement("a"); a.href = "#" + p.id; a.textContent = p.querySelector("h3").textContent;
+        if (i) out.appendChild(document.createTextNode(", "));
+        out.appendChild(a);
+      });
+      out.appendChild(document.createTextNode("."));
+    });
+  });
+
+  // Highlight the current section in the top bar
+  var links = [].slice.call(document.querySelectorAll(".top a"));
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    links.forEach(function (a) { io.observe(document.querySelector(a.getAttribute("href"))); });
+  }
 })();
 </script>
 </body>
